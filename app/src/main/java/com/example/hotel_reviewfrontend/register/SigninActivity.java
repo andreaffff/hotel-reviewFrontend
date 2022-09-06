@@ -147,10 +147,10 @@ public class SigninActivity extends AppCompatActivity {
     private void signIn(UserModel user) throws JSONException {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = getString(R.string.base_url) + "/user/signin/";
+        String url = getString(R.string.base_url) + "/user/signin";
 
         try {
-        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url,null, res -> {
+        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url,user.toJson(), res -> {
                 Log.d("output", res.toString());
         }, new Response.ErrorListener() {
             @Override

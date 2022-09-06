@@ -2,10 +2,7 @@ package com.example.hotel_reviewfrontend.register;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +20,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,13 +33,14 @@ import java.util.regex.Pattern;
 
 public class SigninActivity extends AppCompatActivity  {
     private final int SLEEP = 500;
-    private EditText name;
-    private EditText surname;
-    private EditText email;
-    private EditText address;
-    private EditText phone;
-    private EditText username;
-    private EditText password;
+    private TextInputLayout name;
+    private TextInputLayout surname;
+    private TextInputLayout email;
+    private TextInputLayout address;
+    private TextInputLayout phone;
+    private TextInputLayout username;
+    private TextInputLayout password;
+    private TextInputLayout confirmPassword;
     private Button register;
 
     private String nameValue;
@@ -60,12 +60,23 @@ public class SigninActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_signin);
+        Log.d("On create","Entra qui");
+        System.out.println("Entra qui");
 
-        this.initializeComponent();
-        this.setOnClickRegister();
+        initializeComponent();
+        //this.setOnClickRegister();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.d("On Start","Entra qui");
+
+
     }
 
     private void initializeComponent() {
+        Log.d("initializeComponent","Entra qui");
         this.name = findViewById(R.id.name_txi);
         this.surname = findViewById(R.id.surname_txi);
         this.email = findViewById(R.id.email_txi);
@@ -74,8 +85,10 @@ public class SigninActivity extends AppCompatActivity  {
         this.username =  findViewById(R.id.username_txi);
         this.password =  findViewById(R.id.password_txi);
         this.register = findViewById(R.id.registerBtn);
+        this.confirmPassword = findViewById(R.id.confirmPassword_txi);
 
-        //this.loadingDialog = new LoadingDialog(this);
+
+        this.loadingDialog = new LoadingDialog(this);
 
         this.setOnClickRegister();
 
@@ -84,18 +97,19 @@ public class SigninActivity extends AppCompatActivity  {
     private void setOnClickRegister() {
 
     this.register.setOnClickListener(view -> {
-        this.nameValue = this.name.getText().toString();
-        this.surnameValue = this.surname.getText().toString();
-        this.emailValue = this.email.getText().toString();
-        this.addressValue = this.address.getText().toString();
-        this.phoneValue = this.phone.getText().toString();
-        this.usernameValue = this.username.getText().toString();
-        this.passwordValue = this.password.getText().toString();
+        Log.d("set on click register","il tasto funziona");
+        this.nameValue = this.name.getEditText().toString();
+        this.surnameValue = this.surname.getEditText().toString();
+        this.emailValue = this.email.getEditText().toString();
+        this.addressValue = this.address.getEditText().toString();
+        this.phoneValue = this.phone.getEditText().toString();
+        this.usernameValue = this.username.getEditText().toString();
+        this.passwordValue = this.password.getEditText().toString();
 
         if (this.checkForm()) {
         new Thread(() -> {
             this.openLoadingDialog(true);
-            this.checkUsername();
+            //this.checkUsername();
             while(!this.requestDone){
                 try {
                     Thread.sleep(SLEEP);
@@ -189,7 +203,7 @@ public class SigninActivity extends AppCompatActivity  {
         if(!this.nameValue.isEmpty() && !this.surnameValue.isEmpty() &&  !this.emailValue.isEmpty()
                 && !this.addressValue.isEmpty() && !this.phoneValue.isEmpty()
                 && !this.usernameValue.isEmpty() && !this.passwordValue.isEmpty() ){
-            if(this.chekEmail()){
+            if(this.checkEmail()){
                  return true;
             }else{
                 this.showToast(getString(R.string.invalid_email));
@@ -200,7 +214,7 @@ public class SigninActivity extends AppCompatActivity  {
         return false;
     }
 
-    private boolean chekEmail() {
+    private boolean checkEmail() {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(this.emailValue);

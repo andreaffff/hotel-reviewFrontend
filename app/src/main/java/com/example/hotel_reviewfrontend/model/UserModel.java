@@ -1,6 +1,6 @@
 package com.example.hotel_reviewfrontend.model;
 
-public class Model {
+
     public class UserModel {
         private String username;
         private String name;
@@ -81,4 +81,4 @@ public class Model {
         }
 
     }
-}
+

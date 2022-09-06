@@ -1,7 +1,15 @@
 package com.example.hotel_reviewfrontend.model;
 
 
-    public class UserModel {
+import android.util.JsonWriter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.Writer;
+
+public class UserModel {
         private String username;
         private String name;
         private String surname;
@@ -64,8 +72,6 @@ package com.example.hotel_reviewfrontend.model;
         }
 
         public void setPassword(String password) {
-            System.out.println(this.password);
-            System.out.println(password);
             this.password = password;
         }
 
@@ -80,5 +86,25 @@ package com.example.hotel_reviewfrontend.model;
             this.role = role;
         }
 
+    public JSONObject toJson() throws IOException {
+        JSONObject jsonObject = new JSONObject();
+
+
+        try {
+            jsonObject.put("username", getUsername());
+            jsonObject.put("password", getPassword());
+            jsonObject.put("name", getName());
+            jsonObject.put("surname", getSurname());
+            jsonObject.put("email", getEmail());
+            jsonObject.put("phone", getPhone());
+            jsonObject.put("address", getAddress());
+            jsonObject.put("role", getRole());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+
     }
+
+}
 

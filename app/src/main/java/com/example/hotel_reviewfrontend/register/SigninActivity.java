@@ -2,16 +2,23 @@ package com.example.hotel_reviewfrontend.register;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewDebug;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.ClientError;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -54,7 +61,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
     private boolean requestDone = false;
-    private boolean requestError = false;
+    private boolean responseDone = false;
     private boolean alreadyExists = false;
 
     @Override
@@ -95,6 +102,9 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void setOnClickRegister() {
+        this.responseDone = false;
+        this.requestDone = false; //re-initialization
+
         UserModel user = new UserModel();
         this.register.setOnClickListener(view -> {
 
@@ -106,41 +116,33 @@ public class SigninActivity extends AppCompatActivity {
             user.setUsername(this.username.getEditText().getText().toString());
             user.setPassword(this.password.getEditText().getText().toString());
             confirmPasswordString = this.confirmPassword.getEditText()
-                                                        .getText().toString();
+                    .getText().toString();
 
 
             if (this.checkForm(user)) {
                 new Thread(() -> {
                     this.openLoadingDialog(true);
-                    //this.checkUsername();
+
                     while (!this.requestDone) {
                         try {
                             Thread.sleep(SLEEP);
                         } catch (InterruptedException ignored) {
                         }
-
-                        this.openLoadingDialog(false);
-                        if (!this.requestError) {
-                            if (!this.alreadyExists) {
-                                try {
-                                    this.signIn(user);
-                                } catch (JSONException ex) {
-                                    ex.printStackTrace();
-                                }
-                            } else {
-                                this.alreadyExists = false;
-                                this.showToast(getString(R.string.username_already_used));
-                            }
-                        } else {
-                            this.showToast(getString(R.string.something_went_wrong));
+                        try {
+                            this.signIn(user);
+                            requestDone = true;
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
                         }
-
-                        this.requestDone = false;
-                        this.requestError = false;
                     }
-                }).start();
-            }
+                    while(!responseDone){
+                        Log.v("while response","entra qui");
+                    }
+                    this.openLoadingDialog(false);
 
+                }).start();
+
+            }
         });
     }
 
@@ -148,39 +150,37 @@ public class SigninActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = getString(R.string.base_url) + "/user/signin";
-
+        Log.v("url:", url);
         try {
-        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url,user.toJson(), res -> {
-                Log.d("output", res.toString());
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("onErrorResponse", "Entra qui");
-            }
+            JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, user.toJson(), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.v("output", "entra nella response");
+                    Log.v("response", response.toString());
+                    responseDone = true;
+                    showToast(getString(R.string.signin_ok));
 
-        });
-        requestQueue.add(jsonReq);
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                   /* int code = error.networkResponse.statusCode;
+                    Log.v("status code", String.valueOf(code));*/
+                    responseDone = true;
+
+                    if (error.toString().equals("com.android.volley.ClientError")) {
+                        showToast(getString(R.string.Conflict));
+                    } else if (error.toString().equals("com.android.volley.TimeoutError")) {
+                        showToast(getString(R.string.something_went_wrong));
+                    }
+                }
+            });
+            requestQueue.add(jsonReq);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
 
-    private void checkUsername() {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        String url = getString(R.string.base_url) + "/user/" ;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    if (!response.equals("0"))
-                        this.alreadyExists = true;
-                    this.requestDone = true;
-                },
-                error -> {
-                    this.requestError = true;
-                    this.requestDone = true;
-                }
-        );
-        requestQueue.add(stringRequest);
     }
 
     private void openLoadingDialog(boolean flag) {
@@ -197,12 +197,13 @@ public class SigninActivity extends AppCompatActivity {
 
         if (!user.getName().isEmpty() && !user.getSurname().isEmpty() && !user.getEmail().isEmpty()
                 && !user.getAddress().isEmpty() && !user.getPhone().isEmpty()
-                && !user.getUsername().isEmpty() && !user.getPassword().isEmpty()
-                ) {
-            if (this.checkEmail(user)) {
-                return true;
-            } else {
-                this.showToast(getString(R.string.invalid_email));
+                && !user.getUsername().isEmpty() && !user.getPassword().isEmpty()) {
+            if (this.checkPassword(user)) {
+                if (this.checkEmail(user)) {
+                    return true;
+                } else {
+                    this.showToast(getString(R.string.invalid_email));
+                }
             }
         } else {
             this.showToast(getString(R.string.empty_fields));
@@ -215,6 +216,20 @@ public class SigninActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(user.getEmail());
         return matcher.matches();
+    }
+
+    private boolean checkPassword(UserModel user) {
+        if (user.getPassword().length() >= 7) {
+            if (confirmPasswordString.equals(user.getPassword())) {
+                //TODO da aggiungere controllo su caratteri
+                return true;
+            } else {
+                this.showToast(getString(R.string.passwords_not_match));
+            }
+        } else {
+            this.showToast(getString(R.string.password_too_short));
+        }
+        return false;
     }
 
     private void showToast(String message) {

@@ -1,47 +1,28 @@
-package com.example.hotel_reviewfrontend.register;
+package com.example.hotel_reviewfrontend.signInAndLogin;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ViewDebug;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.ClientError;
-import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.UserModel;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,7 +45,8 @@ public class SigninActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
     private boolean requestDone = false;
     private boolean responseDone = false;
-    private boolean alreadyExists = false;
+    private boolean responseSuccess = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +61,10 @@ public class SigninActivity extends AppCompatActivity {
         } else {
             Log.d("sharedPreferences","Non ha nulla salvato");
         }
-        initializeComponent();
+        this.initializeComponent();
         //this.setOnClickRegister();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("On Start", "Entra qui");
-    }
 
     private void initializeComponent() {
 
@@ -111,6 +88,7 @@ public class SigninActivity extends AppCompatActivity {
         UserModel user = new UserModel();
         this.register.setOnClickListener(view -> {
 
+            this.responseSuccess = false;
             this.responseDone = false;
             this.requestDone = false; //re-initialization
 
@@ -147,11 +125,13 @@ public class SigninActivity extends AppCompatActivity {
                         }
                     }
                     this.openLoadingDialog(false);
-                    SharedPreferences preferences = this.getSharedPreferences("userData",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("username",user.getUsername());
-                    editor.putString("password",user.getPassword());
-                    editor.apply();
+                    if(responseSuccess) {
+                        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("username", user.getUsername());
+                        editor.putString("password", user.getPassword());
+                        editor.apply();
+                    }
                     //TODO da collegare con la home o con la pagina di login
                     //TODO da mettere nel logout
                      /* Codice per cancellare SharedPreferences
@@ -160,11 +140,7 @@ public class SigninActivity extends AppCompatActivity {
                         context.deleteSharedPreferences("userData");
                     }else
                         context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
-
-        //caricamento dati presalvati
-        //Context.MODE_PRIVATE perchè queste preferenze devono essere accessibili solo da questa app
-        preferences=null;*/
-
+                        */
                 }).start();
 
             }
@@ -175,15 +151,14 @@ public class SigninActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = getString(R.string.base_url) + "/user/signin";
-        Log.v("url:", url);
+
         try {
             JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, user.toJson(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     responseDone = true;
+                    responseSuccess = true;
                     showToast(getString(R.string.signin_ok));
-
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -191,6 +166,7 @@ public class SigninActivity extends AppCompatActivity {
                    /* int code = error.networkResponse.statusCode;
                     Log.v("status code", String.valueOf(code));*/
                     responseDone = true;
+                    responseSuccess = false;
 
                     if (error.toString().equals("com.android.volley.ClientError")) {
                         showToast(getString(R.string.Conflict));

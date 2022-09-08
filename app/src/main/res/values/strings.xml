@@ -8,6 +8,10 @@
     <string name="passwords_not_match">Passwords entered do not match</string>
     <string name="password_too_short">Password must have at least 7 characters</string>
     <string name="signin_ok">Your account has been registered successfully</string>
+    <string name="login_ok">Login successfully</string>
+    <string name="username_or_password_wrong">Your username or password is incorrect</string>
     <string name="Conflict">This username already exists</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

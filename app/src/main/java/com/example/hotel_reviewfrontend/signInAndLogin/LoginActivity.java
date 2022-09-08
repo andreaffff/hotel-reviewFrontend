@@ -22,7 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+//TODO da fare una classe util in cui mettere funzioni in comune tra questa classe e quella delle registrazione
 public class LoginActivity extends AppCompatActivity {
     private TextInputLayout username;
     private TextInputLayout password;

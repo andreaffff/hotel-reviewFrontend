@@ -1,5 +1,7 @@
 package com.example.hotel_reviewfrontend.register;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewDebug;
@@ -45,6 +47,7 @@ import java.util.regex.Pattern;
 
 
 public class SigninActivity extends AppCompatActivity {
+
     private final int SLEEP = 500;
     private TextInputLayout name;
     private TextInputLayout surname;
@@ -55,7 +58,6 @@ public class SigninActivity extends AppCompatActivity {
     private TextInputLayout password;
     private TextInputLayout confirmPassword;
     private Button register;
-
 
     private String confirmPasswordString;
 
@@ -69,7 +71,14 @@ public class SigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_signin);
         Log.d("On create", "Entra qui");
+        SharedPreferences preferences= this.getSharedPreferences("userData", Context.MODE_PRIVATE);
+        if(preferences!=null){
+            Log.d("sharedUsername",preferences.getString("username",""));
+            Log.d("sharedPassword",preferences.getString("password",""));
 
+        } else {
+            Log.d("sharedPreferences","Non ha nulla salvato");
+        }
         initializeComponent();
         //this.setOnClickRegister();
     }
@@ -78,11 +87,10 @@ public class SigninActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d("On Start", "Entra qui");
-
-
     }
 
     private void initializeComponent() {
+
         Log.d("initializeComponent", "Entra qui");
         this.name = findViewById(R.id.name_txi);
         this.surname = findViewById(R.id.surname_txi);
@@ -93,20 +101,18 @@ public class SigninActivity extends AppCompatActivity {
         this.password = findViewById(R.id.password_txi);
         this.register = findViewById(R.id.registerBtn);
         this.confirmPassword = findViewById(R.id.confirmPassword_txi);
-
-
         this.loadingDialog = new LoadingDialog(this);
 
         this.setOnClickRegister();
-
     }
 
     private void setOnClickRegister() {
-        this.responseDone = false;
-        this.requestDone = false; //re-initialization
 
         UserModel user = new UserModel();
         this.register.setOnClickListener(view -> {
+
+            this.responseDone = false;
+            this.requestDone = false; //re-initialization
 
             user.setName(this.name.getEditText().getText().toString());
             user.setSurname(this.surname.getEditText().getText().toString());
@@ -117,7 +123,6 @@ public class SigninActivity extends AppCompatActivity {
             user.setPassword(this.password.getEditText().getText().toString());
             confirmPasswordString = this.confirmPassword.getEditText()
                     .getText().toString();
-
 
             if (this.checkForm(user)) {
                 new Thread(() -> {
@@ -136,9 +141,29 @@ public class SigninActivity extends AppCompatActivity {
                         }
                     }
                     while(!responseDone){
-                        Log.v("while response","entra qui");
+                        try {
+                            Thread.sleep(SLEEP);
+                        } catch (InterruptedException ignored) {
+                        }
                     }
                     this.openLoadingDialog(false);
+                    SharedPreferences preferences = this.getSharedPreferences("userData",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("username",user.getUsername());
+                    editor.putString("password",user.getPassword());
+                    editor.apply();
+                    //TODO da collegare con la home o con la pagina di login
+                    //TODO da mettere nel logout
+                     /* Codice per cancellare SharedPreferences
+                    Context context =this;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        context.deleteSharedPreferences("userData");
+                    }else
+                        context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
+
+        //caricamento dati presalvati
+        //Context.MODE_PRIVATE perchè queste preferenze devono essere accessibili solo da questa app
+        preferences=null;*/
 
                 }).start();
 
@@ -155,8 +180,6 @@ public class SigninActivity extends AppCompatActivity {
             JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, user.toJson(), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    Log.v("output", "entra nella response");
-                    Log.v("response", response.toString());
                     responseDone = true;
                     showToast(getString(R.string.signin_ok));
 
@@ -180,7 +203,6 @@ public class SigninActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void openLoadingDialog(boolean flag) {
@@ -198,7 +220,9 @@ public class SigninActivity extends AppCompatActivity {
         if (!user.getName().isEmpty() && !user.getSurname().isEmpty() && !user.getEmail().isEmpty()
                 && !user.getAddress().isEmpty() && !user.getPhone().isEmpty()
                 && !user.getUsername().isEmpty() && !user.getPassword().isEmpty()) {
+
             if (this.checkPassword(user)) {
+
                 if (this.checkEmail(user)) {
                     return true;
                 } else {
@@ -209,16 +233,20 @@ public class SigninActivity extends AppCompatActivity {
             this.showToast(getString(R.string.empty_fields));
         }
         return false;
+
     }
 
     private boolean checkEmail(UserModel user) {
+
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(user.getEmail());
         return matcher.matches();
+
     }
 
     private boolean checkPassword(UserModel user) {
+
         if (user.getPassword().length() >= 7) {
             if (confirmPasswordString.equals(user.getPassword())) {
                 //TODO da aggiungere controllo su caratteri

@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.UserModel;
+import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
@@ -29,6 +30,8 @@ import java.util.regex.Pattern;
 
 public class SigninActivity extends AppCompatActivity {
 
+    Utils utils ;
+    private Toast toast;
     private final int SLEEP = 500;
     private TextInputLayout name;
     private TextInputLayout surname;
@@ -41,11 +44,13 @@ public class SigninActivity extends AppCompatActivity {
     private Button register;
 
     private String confirmPasswordString;
+    private UserModel user;
 
     private LoadingDialog loadingDialog;
     private boolean requestDone = false;
     private boolean responseDone = false;
     private boolean responseSuccess = false;
+    Context context;
 
 
     @Override
@@ -61,14 +66,15 @@ public class SigninActivity extends AppCompatActivity {
         } else {
             Log.d("sharedPreferences","Non ha nulla salvato");
         }
-        this.initializeComponent();
+        this.initializeComponents();
         //this.setOnClickRegister();
     }
 
 
-    private void initializeComponent() {
+    private void initializeComponents() {
 
         Log.d("initializeComponent", "Entra qui");
+        utils = new Utils();
         this.name = findViewById(R.id.name_txi);
         this.surname = findViewById(R.id.surname_txi);
         this.email = findViewById(R.id.email_txi);
@@ -79,13 +85,15 @@ public class SigninActivity extends AppCompatActivity {
         this.register = findViewById(R.id.registerBtn);
         this.confirmPassword = findViewById(R.id.confirmPassword_txi);
         this.loadingDialog = new LoadingDialog(this);
+        toast = new Toast(this);
+        context = getApplicationContext();
 
         this.setOnClickRegister();
     }
 
     private void setOnClickRegister() {
 
-        UserModel user = new UserModel();
+        user = new UserModel();
         this.register.setOnClickListener(view -> {
 
             this.responseSuccess = false;
@@ -102,52 +110,11 @@ public class SigninActivity extends AppCompatActivity {
             confirmPasswordString = this.confirmPassword.getEditText()
                     .getText().toString();
 
-            if (this.checkForm(user)) {
-                new Thread(() -> {
-                    this.openLoadingDialog(true);
-
-                    while (!this.requestDone) {
-                        try {
-                            Thread.sleep(SLEEP);
-                        } catch (InterruptedException ignored) {
-                        }
-                        try {
-                            this.signIn(user);
-                            requestDone = true;
-                        } catch (JSONException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                    while(!responseDone){
-                        try {
-                            Thread.sleep(SLEEP);
-                        } catch (InterruptedException ignored) {
-                        }
-                    }
-                    this.openLoadingDialog(false);
-                    if(responseSuccess) {
-                        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("username", user.getUsername());
-                        editor.putString("password", user.getPassword());
-                        editor.apply();
-                    }
-                    //TODO da collegare con la home o con la pagina di login
-                    //TODO da mettere nel logout
-                     /* Codice per cancellare SharedPreferences
-                    Context context =this;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        context.deleteSharedPreferences("userData");
-                    }else
-                        context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
-                        */
-                }).start();
-
-            }
+            this.requestHandler();
         });
     }
 
-    private void signIn(UserModel user) throws JSONException {
+    private void signIn() throws JSONException {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = getString(R.string.base_url) + "/user/signin";
@@ -158,7 +125,7 @@ public class SigninActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     responseDone = true;
                     responseSuccess = true;
-                    showToast(getString(R.string.signin_ok));
+                    utils.showToast(context,getString(R.string.signin_ok));
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -169,9 +136,9 @@ public class SigninActivity extends AppCompatActivity {
                     responseSuccess = false;
 
                     if (error.toString().equals("com.android.volley.ClientError")) {
-                        showToast(getString(R.string.Conflict));
+                        utils.showToast(context,getString(R.string.Conflict));
                     } else if (error.toString().equals("com.android.volley.TimeoutError")) {
-                        showToast(getString(R.string.something_went_wrong));
+                        utils.showToast(context,getString(R.string.something_went_wrong));
                     }
                 }
             });
@@ -180,18 +147,52 @@ public class SigninActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    private void requestHandler(){
+        if (this.checkForm()) {
+            new Thread(() -> {
+                utils.openLoadingDialog(loadingDialog,true);
 
-    private void openLoadingDialog(boolean flag) {
-        this.runOnUiThread(() -> {
-            if (flag)
-                this.loadingDialog.show();
-            else
-                this.loadingDialog.dismiss();
-        });
+                while (!this.requestDone) {
+                    try {
+                        Thread.sleep(SLEEP);
+                    } catch (InterruptedException ignored) {
+                    }
+                    try {
+                        this.signIn();
+                        requestDone = true;
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                while(!responseDone){
+                    try {
+                        Thread.sleep(SLEEP);
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+                utils.openLoadingDialog(loadingDialog,false);
+                if(responseSuccess) {
+                    SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("username", user.getUsername());
+                    editor.putString("password", user.getPassword());
+                    editor.apply();
+                }
+                //TODO da collegare con la home o con la pagina di login
+                //TODO da mettere nel logout
+                     /* Codice per cancellare SharedPreferences
+                    Context context =this;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        context.deleteSharedPreferences("userData");
+                    }else
+                        context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
+                        */
+            }).start();
+
+        }
     }
 
-
-    private boolean checkForm(UserModel user) {
+    private boolean checkForm() {
 
         if (!user.getName().isEmpty() && !user.getSurname().isEmpty() && !user.getEmail().isEmpty()
                 && !user.getAddress().isEmpty() && !user.getPhone().isEmpty()
@@ -202,11 +203,11 @@ public class SigninActivity extends AppCompatActivity {
                 if (this.checkEmail(user)) {
                     return true;
                 } else {
-                    this.showToast(getString(R.string.invalid_email));
+                    utils.showToast(context,getString(R.string.invalid_email));
                 }
             }
         } else {
-            this.showToast(getString(R.string.empty_fields));
+            utils.showToast(context,getString(R.string.empty_fields));
         }
         return false;
 
@@ -228,17 +229,15 @@ public class SigninActivity extends AppCompatActivity {
                 //TODO da aggiungere controllo su caratteri
                 return true;
             } else {
-                this.showToast(getString(R.string.passwords_not_match));
+                utils.showToast(context,getString(R.string.passwords_not_match));
             }
         } else {
-            this.showToast(getString(R.string.password_too_short));
+            utils.showToast(context,getString(R.string.password_too_short));
         }
         return false;
     }
 
-    private void showToast(String message) {
-        this.runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
-    }
+
 
 
 }

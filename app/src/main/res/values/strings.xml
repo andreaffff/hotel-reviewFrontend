@@ -17,7 +17,8 @@
     <string name="address">address:</string>
     <string name="phone">phone:</string>
     <string name="username">username:</string>
-    <string name="modificaProfilo">modifica profilo</string>
+    <string name="update_profile">update profile</string>
+    <string name="my_reviews">my reviews</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -26,19 +26,19 @@ import org.json.JSONObject;
 
 
 public class MyProfileActivity extends AppCompatActivity {
-    Utils utils;
-    TextView name;
-    TextView surname;
-    TextView email;
-    TextView username;
-    TextView phone;
-    TextView address;
-    Button update;
-    Button myReviews;
-    Context context;
-    LoadingDialog loadingDialog;
-    boolean requestDone;
-    boolean responseDone;
+    private Utils utils;
+    private TextView name;
+    private TextView surname;
+    private TextView email;
+    private TextView username;
+    private TextView phone;
+    private TextView address;
+    private Button update;
+    private Button myReviews;
+    private Context context;
+    private LoadingDialog loadingDialog;
+    private boolean requestDone;
+    private boolean responseDone;
     private final int SLEEP = 500;
 
     @Override

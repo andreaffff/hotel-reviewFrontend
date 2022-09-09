@@ -11,7 +11,17 @@
     <string name="login_ok">Login successfully</string>
     <string name="username_or_password_wrong">Your username or password is incorrect</string>
     <string name="Conflict">This username already exists</string>
+    <string name="name">name:</string>
+    <string name="surname">surname:</string>
+    <string name="email">email:</string>
+    <string name="address">address:</string>
+    <string name="phone">phone:</string>
+    <string name="username">username:</string>
+    <string name="modificaProfilo">modifica profilo</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save">save</string>
 
 </resources>

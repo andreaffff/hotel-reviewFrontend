@@ -43,10 +43,28 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="365dp"
         android:layout_height="wrap_content"
-        android:text="Invio"
-        />
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/loginBtn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="100dp"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/goToSignIn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/go_to_sign_in" />
+    </LinearLayout>
+
 </LinearLayout>

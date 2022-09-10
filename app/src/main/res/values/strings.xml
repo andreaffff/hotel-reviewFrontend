@@ -18,8 +18,8 @@
     <string name="phone">phone:</string>
     <string name="username">username:</string>
     <string name="update_profile">update profile</string>
-    <string name="login">signup</string>
-    <string name ="go_to_sign_in">go to signIn</string>
+    <string name="login">Login</string>
+    <string name ="go_to_sign_in">Go to signIn</string>
 
     <string name="update_user_ok">Your profile is updated succesfully</string>
     <string name="update_username_ok">Your username is updated succesfully</string>

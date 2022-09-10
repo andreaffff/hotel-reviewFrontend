@@ -29,23 +29,36 @@
                 android:contentDescription=""
                 />
 
-            <Button
-                android:id="@+id/updateBtn"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="40dp"
-                android:text="@string/update_profile" />
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp">
 
-            <Button
-                android:id="@+id/myReviewsBtn"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="40dp"
-                android:text="@string/my_reviews" />
+
+                <Button
+                    android:id="@+id/myReview"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="165dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginRight="65dp"
+                    android:text="@string/aggiungiRecensione" />
+
+                <Button
+                    android:id="@+id/updateBtn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="165dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/update_profile">
+
+                </Button>
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

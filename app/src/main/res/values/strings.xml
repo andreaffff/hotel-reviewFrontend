@@ -18,7 +18,7 @@
     <string name="phone">phone:</string>
     <string name="username">username:</string>
     <string name="update_profile">update profile</string>
-    <string name="my_reviews">my reviews</string>
+
     <string name="update_user_ok">Your profile is updated succesfully</string>
     <string name="update_username_ok">Your username is updated succesfully</string>
 
@@ -27,5 +27,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save">save</string>
+    <string name="aggiungiRecensione">my review</string>
 
 </resources>

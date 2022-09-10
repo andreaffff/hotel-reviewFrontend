@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
+import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 
 import org.json.JSONException;
@@ -102,6 +103,7 @@ public class MyProfileActivity extends AppCompatActivity {
                         phone.setText(res.getString("phone"));
                         address.setText(res.getString("address"));
                         email.setText(res.getString("email"));
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -111,12 +113,15 @@ public class MyProfileActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     utils.showToast(context,getString(R.string.something_went_wrong));
                     Log.d("errore", "errore");
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    startActivity(intent);
+
                     responseDone = true;
                 }
             });
             requestQueue.add(jsonReq);
         } else {
-            // manda a pagina di login
+
         }
 
 

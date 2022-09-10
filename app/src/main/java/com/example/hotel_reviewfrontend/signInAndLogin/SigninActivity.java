@@ -179,7 +179,6 @@ public class SigninActivity extends AppCompatActivity {
                     editor.apply();
                 }
                 //TODO da collegare con la home o con la pagina di login
-                //TODO da mettere nel logout
                      /* Codice per cancellare SharedPreferences
                     Context context =this;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

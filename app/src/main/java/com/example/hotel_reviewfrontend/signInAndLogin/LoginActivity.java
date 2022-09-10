@@ -1,6 +1,7 @@
 package com.example.hotel_reviewfrontend.signInAndLogin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,15 +24,14 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-//TODO da fare una classe util in cui mettere funzioni in comune tra questa classe e quella delle registrazione
 public class LoginActivity extends AppCompatActivity {
 
     Utils utils;
     private TextInputLayout username;
     private TextInputLayout password;
     private Button loginButton;
+    private Button signinButton;
     private LoadingDialog loadingDialog;
-    Toast toast ;
     private String usernameStr;
     private String passwordStr;
     private boolean requestDone = false;
@@ -57,8 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         this.password = findViewById(R.id.password_txi);
         this.loadingDialog = new LoadingDialog(this);
         this.loginButton = findViewById(R.id.loginBtn);
+        this.signinButton = findViewById(R.id.goToSignIn);
         context = getApplicationContext();
 
+        this.setOnClickSignup();
         this.setOnClickLogin();
         utils = new Utils();
     }
@@ -73,6 +75,13 @@ public class LoginActivity extends AppCompatActivity {
             usernameStr = this.username.getEditText().getText().toString();
             passwordStr = this.password.getEditText().getText().toString();
             this.requestHandler();
+        });
+
+    }
+    private void setOnClickSignup(){
+        this.signinButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SigninActivity.class);
+            startActivity(intent);
         });
 
     }

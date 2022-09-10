@@ -1,6 +1,7 @@
 package com.example.hotel_reviewfrontend.user;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.UserModel;
+import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -24,6 +26,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UpdateProfileActivity extends AppCompatActivity {
     private final static int SLEEP = 500;
@@ -83,8 +87,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     private void setOnClickSave() {
         this.save.setOnClickListener(view -> {
-            requestHandler();
 
+            requestHandler();
         });
     }
     private void getFromIntent(){
@@ -108,7 +112,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         }
     }
-    private void updateValues(){
+    private void updateValues(){ //volley request tranne username
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
         if (usernamePreference != null) {
@@ -118,11 +122,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             String url = getString(R.string.base_url) + "/user/updateUser?username=" + usernamePreference;
             JsonObjectRequest jsonReq = null;
 
-            user.setName(name.getEditText().getText().toString());
-            user.setSurname(surname.getEditText().getText().toString());
-            user.setEmail(email.getEditText().getText().toString());
-            user.setPhone(phone.getEditText().getText().toString());
-            user.setAddress(address.getEditText().getText().toString());
+
             try {
                 jsonReq = new JsonObjectRequest(Request.Method.PUT, url, user.toJson(), new Response.Listener<JSONObject>() {
                     @Override
@@ -148,11 +148,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
 
     }
-        //volley request tranne username
+
 
     private void updateUsername() {
-        //TODO quando fai la modifica dello username cambia anche il valore nella sharedPreference
-        //TODO mettere shared preferences nelle variabili di classe e inizializzarla insieme alle altre variabili
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
         if (usernamePreference != null) {
@@ -162,6 +160,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             String url = getString(R.string.base_url) + "/user/updateUsername?username=" + usernamePreference;
             JsonObjectRequest jsonReq = null;
             JSONObject jsonObject = new JSONObject();
+
             try {
                 jsonObject.put("oldValue",usernameStr);
                 jsonObject.put("newValue",newUsername);
@@ -169,8 +168,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 jsonReq = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject res) {
-                        Log.d("res",res.toString());
-                        utils.showToast(context,getString(R.string.update_username_ok));
                         responseDone = true;
                     }
                 }, new Response.ErrorListener() {
@@ -185,8 +182,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             requestQueue.add(jsonReq);
-        } else {
-            // manda a pagina di login
         }
     }
     protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
@@ -195,33 +190,73 @@ public class UpdateProfileActivity extends AppCompatActivity {
         requestUsernameDone = false;
         responseUsernameDone = false;
 
-        new Thread(() -> {
-            utils.openLoadingDialog(loadingDialog, true);
+        user.setName(name.getEditText().getText().toString());
+        user.setSurname(surname.getEditText().getText().toString());
+        user.setEmail(email.getEditText().getText().toString());
+        user.setPhone(phone.getEditText().getText().toString());
+        user.setAddress(address.getEditText().getText().toString());
+        newUsername = username.getEditText().getText().toString();
 
-            while (!this.requestDone && !requestUsernameDone) {
-                try {
-                    Thread.sleep(SLEEP);
-                } catch (InterruptedException ignored) {
-                }
-                this.updateValues();
-                newUsername = username.getEditText().getText().toString();
-                if(usernameStr != newUsername) {
-                    this.updateUsername();
-                    requestUsernameDone = true;
-                } else {
-                    requestUsernameDone = true;
-                }
+        if(checkForm()) {
+            new Thread(() -> {
+                utils.openLoadingDialog(loadingDialog, true);
 
-                requestDone = true;
-            }
-            while (!responseDone && !responseUsernameDone) {
-                try {
-                    Thread.sleep(SLEEP);
-                } catch (InterruptedException ignored) {
-                }
-            }
-            utils.openLoadingDialog(loadingDialog, false);
+                while (!this.requestDone && !this.requestUsernameDone) {
+                    try {
+                        Thread.sleep(SLEEP);
+                    } catch (InterruptedException ignored) {
+                    }
+                    this.updateValues();
 
-        }).start();
+                    if (usernameStr != newUsername) {
+                        this.updateUsername();
+                        requestUsernameDone = true;
+
+                    }
+
+                    requestDone = true;
+                }
+                while (!responseDone && !responseUsernameDone) {
+                    try {
+                        Thread.sleep(SLEEP);
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+                SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("username", newUsername);
+                editor.apply();
+                utils.openLoadingDialog(loadingDialog, false);
+
+            }).start();
+        }
     }
+
+    private boolean checkForm() {
+
+        if (!user.getName().isEmpty() && !user.getSurname().isEmpty() && !user.getEmail().isEmpty()
+                && !user.getAddress().isEmpty() && !user.getPhone().isEmpty() && !newUsername.isEmpty()) {
+
+                if (this.checkEmail(user)) {
+                    return true;
+                } else {
+                    utils.showToast(context,getString(R.string.invalid_email));
+                }
+
+        } else {
+            utils.showToast(context,getString(R.string.empty_fields));
+        }
+        return false;
+
+    }
+
+    private boolean checkEmail(UserModel user) {
+
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(user.getEmail());
+        return matcher.matches();
+
+    }
+
 }

@@ -131,6 +131,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <Button
                 android:id="@+id/registerBtn"
                 android:layout_width="wrap_content"
@@ -138,6 +139,7 @@
                 android:layout_gravity="right"
                 android:text="Invio" />
         </LinearLayout>
+
     </ScrollView>
 
 </RelativeLayout>

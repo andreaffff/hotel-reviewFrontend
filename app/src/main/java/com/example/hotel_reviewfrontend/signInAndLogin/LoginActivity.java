@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         this.username = findViewById(R.id.username_txi);
         this.password = findViewById(R.id.password_txi);
         this.loadingDialog = new LoadingDialog(this);
-        this.loginButton = findViewById(R.id.loginButton);
+        this.loginButton = findViewById(R.id.loginBtn);
         context = getApplicationContext();
 
         this.setOnClickLogin();

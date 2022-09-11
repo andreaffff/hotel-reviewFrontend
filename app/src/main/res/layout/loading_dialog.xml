@@ -17,17 +17,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingClass" />
 
-    <TextView
-        android:id="@+id/loadingTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="@string/loading"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/gifImageView"
-        app:layout_constraintEnd_toEndOf="@+id/gifImageView"
-        app:layout_constraintStart_toStartOf="@+id/gifImageView"
-        app:layout_constraintTop_toTopOf="@+id/gifImageView"
-        tools:ignore="TextContrastCheck" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

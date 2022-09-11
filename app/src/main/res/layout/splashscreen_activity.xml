@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/_7450">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="200dp"
+        android:text="HOTEL ADVISOR"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="50dp">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="300dp"
+        android:textAlignment="center"
+        android:text="WELCOME"
+        android:textColor="@color/white"
+        android:textSize="50dp">
+
+    </TextView>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="435dp"
+        android:layout_marginLeft="175dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icons8_hotel_a_3_stelle_64" />
+
+</RelativeLayout>

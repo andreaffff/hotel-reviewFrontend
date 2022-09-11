@@ -31,5 +31,6 @@
     <string name="save">save</string>
     <string name="aggiungiRecensione">my review</string>
     <string name="logout">logout</string>
+    <string name="rating_review">review rate</string>
 
 </resources>

@@ -9,7 +9,7 @@ import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 
 public class Utils extends AppCompatActivity {
 
-    public void showToast(Context context,String message) {
+    public void showToast(Context context, String message) {
         this.runOnUiThread(() -> Toast.makeText(context, message, Toast.LENGTH_LONG).show());
     }
 

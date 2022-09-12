@@ -22,7 +22,7 @@
     <string name ="go_to_sign_in">Go to signIn</string>
 
     <string name="update_user_ok">Your profile is updated succesfully</string>
-
+    <string name="update_password_ok">Your password is updated succesfully</string>
 
 
 

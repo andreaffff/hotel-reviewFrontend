@@ -30,9 +30,10 @@ import java.util.regex.Pattern;
 
 public class SigninActivity extends AppCompatActivity {
 
-    Utils utils ;
-    private Toast toast;
     private final int SLEEP = 500;
+    Utils utils;
+    Context context;
+    private Toast toast;
     private TextInputLayout name;
     private TextInputLayout surname;
     private TextInputLayout email;
@@ -42,29 +43,25 @@ public class SigninActivity extends AppCompatActivity {
     private TextInputLayout password;
     private TextInputLayout confirmPassword;
     private Button register;
-
     private String confirmPasswordString;
     private UserModel user;
-
     private LoadingDialog loadingDialog;
     private boolean requestDone = false;
     private boolean responseDone = false;
     private boolean responseSuccess = false;
-    Context context;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_signin);
         Log.d("On create", "Entra qui");
-        SharedPreferences preferences= this.getSharedPreferences("userData", Context.MODE_PRIVATE);
-        if(preferences!=null){
-            Log.d("sharedUsername",preferences.getString("username",""));
-            Log.d("sharedPassword",preferences.getString("password",""));
+        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
+        if (preferences != null) {
+            Log.d("sharedUsername", preferences.getString("username", ""));
+            Log.d("sharedPassword", preferences.getString("password", ""));
 
         } else {
-            Log.d("sharedPreferences","Non ha nulla salvato");
+            Log.d("sharedPreferences", "Non ha nulla salvato");
         }
         this.initializeComponents();
         //this.setOnClickRegister();
@@ -82,7 +79,7 @@ public class SigninActivity extends AppCompatActivity {
         this.phone = findViewById(R.id.phone_txi);
         this.username = findViewById(R.id.username_txi);
         this.password = findViewById(R.id.password_txi);
-        this.register = findViewById(R.id.registerBtn);
+        this.register = findViewById(R.id.changePassword);
         this.confirmPassword = findViewById(R.id.confirmPassword_txi);
         this.loadingDialog = new LoadingDialog(this);
         toast = new Toast(this);
@@ -125,7 +122,7 @@ public class SigninActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     responseDone = true;
                     responseSuccess = true;
-                    utils.showToast(context,getString(R.string.signin_ok));
+                    utils.showToast(context, getString(R.string.signin_ok));
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -136,9 +133,9 @@ public class SigninActivity extends AppCompatActivity {
                     responseSuccess = false;
 
                     if (error.toString().equals("com.android.volley.ClientError")) {
-                        utils.showToast(context,getString(R.string.Conflict));
+                        utils.showToast(context, getString(R.string.Conflict));
                     } else if (error.toString().equals("com.android.volley.TimeoutError")) {
-                        utils.showToast(context,getString(R.string.something_went_wrong));
+                        utils.showToast(context, getString(R.string.something_went_wrong));
                     }
                 }
             });
@@ -147,10 +144,11 @@ public class SigninActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void requestHandler(){
+
+    private void requestHandler() {
         if (this.checkForm()) {
             new Thread(() -> {
-                utils.openLoadingDialog(loadingDialog,true);
+                utils.openLoadingDialog(loadingDialog, true);
 
                 while (!this.requestDone) {
                     try {
@@ -164,14 +162,14 @@ public class SigninActivity extends AppCompatActivity {
                         ex.printStackTrace();
                     }
                 }
-                while(!responseDone){
+                while (!responseDone) {
                     try {
                         Thread.sleep(SLEEP);
                     } catch (InterruptedException ignored) {
                     }
                 }
-                utils.openLoadingDialog(loadingDialog,false);
-                if(responseSuccess) {
+                utils.openLoadingDialog(loadingDialog, false);
+                if (responseSuccess) {
                     SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("username", user.getUsername());
@@ -181,10 +179,7 @@ public class SigninActivity extends AppCompatActivity {
                 //TODO da collegare con la home o con la pagina di login
                      /* Codice per cancellare SharedPreferences
                     Context context =this;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        context.deleteSharedPreferences("userData");
-                    }else
-                        context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
+
                         */
             }).start();
 
@@ -202,11 +197,11 @@ public class SigninActivity extends AppCompatActivity {
                 if (this.checkEmail(user)) {
                     return true;
                 } else {
-                    utils.showToast(context,getString(R.string.invalid_email));
+                    utils.showToast(context, getString(R.string.invalid_email));
                 }
             }
         } else {
-            utils.showToast(context,getString(R.string.empty_fields));
+            utils.showToast(context, getString(R.string.empty_fields));
         }
         return false;
 
@@ -228,15 +223,13 @@ public class SigninActivity extends AppCompatActivity {
                 //TODO da aggiungere controllo su caratteri
                 return true;
             } else {
-                utils.showToast(context,getString(R.string.passwords_not_match));
+                utils.showToast(context, getString(R.string.passwords_not_match));
             }
         } else {
-            utils.showToast(context,getString(R.string.password_too_short));
+            utils.showToast(context, getString(R.string.password_too_short));
         }
         return false;
     }
-
-
 
 
 }

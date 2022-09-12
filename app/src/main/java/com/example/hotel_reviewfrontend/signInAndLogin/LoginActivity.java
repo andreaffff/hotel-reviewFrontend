@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,12 +17,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
-import com.example.hotel_reviewfrontend.model.UserModel;
+import com.example.hotel_reviewfrontend.user.MyProfileActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 public class LoginActivity extends AppCompatActivity {
 
     Utils utils;
@@ -37,22 +37,18 @@ public class LoginActivity extends AppCompatActivity {
     private boolean requestDone = false;
     private boolean responseDone = false;
     private boolean responseSuccess = false;
-    private int SLEEP = 500;
+    private final int SLEEP = 500;
     private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_login);
-        SharedPreferences preference = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
-        Log.d("shared", preference.getString("username", null));
-        Log.d("shared", preference.getString("password", null));
         this.initializeComponents();
     }
 
     private void initializeComponents() {
 
-        Log.d("initializeComponent", "Entra qui");
         this.username = findViewById(R.id.username_txi);
         this.password = findViewById(R.id.password_txi);
         this.loadingDialog = new LoadingDialog(this);
@@ -78,7 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-    private void setOnClickSignup(){
+
+    private void setOnClickSignup() {
         this.signinButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, SigninActivity.class);
             startActivity(intent);
@@ -101,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     responseDone = true;
                     responseSuccess = true;
-                    utils.showToast(context,getString(R.string.login_ok));
+                    utils.showToast(context, getString(R.string.login_ok));
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -109,12 +106,11 @@ public class LoginActivity extends AppCompatActivity {
 
                     responseDone = true;
                     responseSuccess = false;
-                    Log.d("error:", error.toString());
 
                     if (error.toString().equals("com.android.volley.AuthFailureError")) {
-                        utils.showToast(context,getString(R.string.username_or_password_wrong));
+                        utils.showToast(context, getString(R.string.username_or_password_wrong));
                     } else if (error.toString().equals("com.android.volley.TimeoutError")) {
-                        utils.showToast(context,getString(R.string.something_went_wrong));
+                        utils.showToast(context, getString(R.string.something_went_wrong));
                     }
                 }
             });
@@ -123,11 +119,12 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void requestHandler(){
+
+    private void requestHandler() {
 
         if (!usernameStr.isEmpty() || !passwordStr.isEmpty()) {
             new Thread(() -> {
-                utils.openLoadingDialog(loadingDialog,true);
+                utils.openLoadingDialog(loadingDialog, true);
 
                 while (!this.requestDone) {
                     try {
@@ -147,19 +144,21 @@ public class LoginActivity extends AppCompatActivity {
                     } catch (InterruptedException ignored) {
                     }
                 }
-                utils.openLoadingDialog(loadingDialog,false);
+                utils.openLoadingDialog(loadingDialog, false);
                 if (responseSuccess) {
                     SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("username", usernameStr);
                     editor.putString("password", passwordStr);
                     editor.apply();
+                    Intent intent = new Intent(this, MyProfileActivity.class); //TODO mettere home al posto di MyProfile
+                    startActivity(intent);
                 }
 
             }).start();
         } else {
 
-            utils.showToast(context,getString(R.string.empty_fields));
+            utils.showToast(context, getString(R.string.empty_fields));
         }
     }
 }

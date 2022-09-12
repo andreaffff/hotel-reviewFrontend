@@ -3,6 +3,7 @@ package com.example.hotel_reviewfrontend.user;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -22,7 +23,6 @@ import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private String phoneStr;
     private String addressStr;
     private Button save;
-    private  LoadingDialog loadingDialog;
+    private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
     private boolean requestUsernameDone;
@@ -91,7 +91,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
             requestHandler();
         });
     }
-    private void getFromIntent(){
+
+    private void getFromIntent() {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -112,28 +113,26 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
         }
     }
-    private void updateValues(){ //volley request tranne username
+
+    private void updateValues() { //volley request tranne username
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
         if (usernamePreference != null) {
-            Log.d("username!=", "entra");
-
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             String url = getString(R.string.base_url) + "/user/updateUser?username=" + usernamePreference;
             JsonObjectRequest jsonReq = null;
-
 
             try {
                 jsonReq = new JsonObjectRequest(Request.Method.PUT, url, user.toJson(), new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject res) {
-                        utils.showToast(context,getString(R.string.update_user_ok));
+                        utils.showToast(context, getString(R.string.update_user_ok));
                         responseDone = true;
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        utils.showToast(context,getString(R.string.something_went_wrong));
+                        utils.showToast(context, getString(R.string.something_went_wrong));
                         Log.d("errore", "errore");
                         responseDone = true;
                     }
@@ -143,10 +142,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
             requestQueue.add(jsonReq);
         } else {
-            // manda a pagina di login
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                context.deleteSharedPreferences("userData");
+            } else
+                context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
         }
-
-
     }
 
 
@@ -162,8 +164,8 @@ public class UpdateProfileActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
 
             try {
-                jsonObject.put("oldValue",usernameStr);
-                jsonObject.put("newValue",newUsername);
+                jsonObject.put("oldValue", usernameStr);
+                jsonObject.put("newValue", newUsername);
 
                 jsonReq = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
                     @Override
@@ -173,8 +175,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        utils.showToast(context,getString(R.string.something_went_wrong));
-                        Log.d("errore", "errore");
+                        utils.showToast(context, getString(R.string.something_went_wrong));
                         responseDone = true;
                     }
                 });
@@ -184,6 +185,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             requestQueue.add(jsonReq);
         }
     }
+
     protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
         responseDone = false;
         requestDone = false;
@@ -197,7 +199,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         user.setAddress(address.getEditText().getText().toString());
         newUsername = username.getEditText().getText().toString();
 
-        if(checkForm()) {
+        if (checkForm()) {
             new Thread(() -> {
                 utils.openLoadingDialog(loadingDialog, true);
 
@@ -237,14 +239,14 @@ public class UpdateProfileActivity extends AppCompatActivity {
         if (!user.getName().isEmpty() && !user.getSurname().isEmpty() && !user.getEmail().isEmpty()
                 && !user.getAddress().isEmpty() && !user.getPhone().isEmpty() && !newUsername.isEmpty()) {
 
-                if (this.checkEmail(user)) {
-                    return true;
-                } else {
-                    utils.showToast(context,getString(R.string.invalid_email));
-                }
+            if (this.checkEmail(user)) {
+                return true;
+            } else {
+                utils.showToast(context, getString(R.string.invalid_email));
+            }
 
         } else {
-            utils.showToast(context,getString(R.string.empty_fields));
+            utils.showToast(context, getString(R.string.empty_fields));
         }
         return false;
 

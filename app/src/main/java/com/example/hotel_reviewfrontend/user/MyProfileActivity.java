@@ -3,11 +3,12 @@ package com.example.hotel_reviewfrontend.user;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +28,7 @@ import org.json.JSONObject;
 
 
 public class MyProfileActivity extends AppCompatActivity {
+    private final int SLEEP = 500;
     private Utils utils;
     private TextView name;
     private TextView surname;
@@ -36,11 +38,11 @@ public class MyProfileActivity extends AppCompatActivity {
     private TextView address;
     private Button update;
     private Button myReviews;
+    private ImageButton logout;
     private Context context;
     private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
-    private final int SLEEP = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +50,32 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.my_profile);
         this.initializeComponents();
     }
+
     private void setOnClickUpdateProfile() {
         this.update.setOnClickListener(view -> {
             Intent intent = new Intent(this, UpdateProfileActivity.class);
-            intent.putExtra("username",username.getText());
-            intent.putExtra("name",name.getText());
-            intent.putExtra("surname",surname.getText());
-            intent.putExtra("email",email.getText());
-            intent.putExtra("address",address.getText());
-            intent.putExtra("phone",phone.getText());
+            intent.putExtra("username", username.getText());
+            intent.putExtra("name", name.getText());
+            intent.putExtra("surname", surname.getText());
+            intent.putExtra("email", email.getText());
+            intent.putExtra("address", address.getText());
+            intent.putExtra("phone", phone.getText());
             startActivity(intent);
 
         });
 
-        }
+    }
+
+    private void setOnClickLogout() {
+        this.logout.setOnClickListener(view -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                context.deleteSharedPreferences("userData");
+            } else
+                context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
+        });
+    }
 
     private void initializeComponents() {
 
@@ -73,6 +87,7 @@ public class MyProfileActivity extends AppCompatActivity {
         this.username = findViewById(R.id.username_txo);
         this.update = findViewById(R.id.updateBtn);
         this.myReviews = findViewById(R.id.myReviewsBtn);
+        this.logout = findViewById(R.id.logoutBtn);
         this.loadingDialog = new LoadingDialog(this);
         this.requestDone = false;
         this.responseDone = false;
@@ -80,14 +95,14 @@ public class MyProfileActivity extends AppCompatActivity {
         context = getApplicationContext();
         this.requestHandler();
         this.setOnClickUpdateProfile();
+        this.setOnClickLogout();
     }
 
     protected void assignValues() { // Richiesta al server getOneUser
-        Log.d("Assign values", "entra");
+
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernameStr = preferences.getString("username", null);
         if (usernameStr != null) {
-            Log.d("username!=", "entra");
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             String url = getString(R.string.base_url) + "/user/?username=" + usernameStr;
@@ -111,7 +126,7 @@ public class MyProfileActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    utils.showToast(context,getString(R.string.something_went_wrong));
+                    utils.showToast(context, getString(R.string.something_went_wrong));
                     Log.d("errore", "errore");
                     Intent intent = new Intent(context, LoginActivity.class);
                     startActivity(intent);
@@ -139,8 +154,8 @@ public class MyProfileActivity extends AppCompatActivity {
                     Thread.sleep(SLEEP);
                 } catch (InterruptedException ignored) {
                 }
-                    this.assignValues();
-                    requestDone = true;
+                this.assignValues();
+                requestDone = true;
             }
             while (!responseDone) {
                 try {

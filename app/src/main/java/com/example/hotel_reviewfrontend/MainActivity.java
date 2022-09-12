@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
         String passwordPreference = preferences.getString("password", null);
-        Intent intent;//TODO quando è finita mettere la home qui
+        Log.d("passwordPreference",passwordPreference);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = getString(R.string.base_url) + "/user/login";
         JSONObject jsonObject = new JSONObject();
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    Intent intent = new Intent(context, MyProfileActivity.class);
+                    Intent intent = new Intent(context, MyProfileActivity.class); //TODO mettere home
                     startActivity(intent);
                 }
             }, new Response.ErrorListener() {

@@ -66,13 +66,15 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             newPasswordStr = newPassword.getEditText().getText().toString();
             confirmPasswordStr = confirmPassword.getEditText().getText().toString();
 
-            if(confirmPasswordStr.equals(newPasswordStr) && confirmPasswordStr.length()>7){
+            if(confirmPasswordStr.equals(newPasswordStr) && confirmPasswordStr.length()>=7){
                 updatePassword();
             } else if(confirmPasswordStr.length()<7){
                 utils.showToast(this,getString(R.string.password_too_short));
-            }else{
+            }else if(!confirmPasswordStr.equals(newPasswordStr)){
                 utils.showToast(this,getString(R.string.passwords_not_match));
-            }
+            }else
+                utils.showToast(this,getString(R.string.something_went_wrong));
+
 
         });
     }
@@ -84,6 +86,9 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             String url = getString(R.string.base_url) + "/user/updatePassword?username=" + usernamePreference;
             JsonObjectRequest jsonReq = null;
             JSONObject jsonObject = new JSONObject();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("password", newPasswordStr);
+            editor.apply();
 
 
             try {

@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-
+//TODO qui e nel login va inserito il ruolo nelle shared preference
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        //TODO non si vede lo splashscreen
         SharedPreferences preferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
         String passwordPreference = preferences.getString("password", null);
+        //TODO controllo ruolo attraverso risposta login del backend
         Log.d("passwordPreference",passwordPreference);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = getString(R.string.base_url) + "/user/login";

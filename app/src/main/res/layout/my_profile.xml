@@ -55,7 +55,7 @@
                         android:layout_gravity="left"
                         android:layout_marginTop="60dp"
                         android:layout_marginRight="65dp"
-                        android:text="@string/aggiungiRecensione" />
+                        android:text="@string/my_reviews" />
 
                     <Button
                         android:id="@+id/updateBtn"

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.RatingBar;
 
@@ -56,7 +57,6 @@ public class addReviewActivity extends AppCompatActivity {
         zipCode = findViewById(R.id.zip_code_txi);
         rating = findViewById(R.id.ratingReview);
         enter = findViewById(R.id.enter_Btn);
-        rating.setStepSize(1);
         responseDone = false;
         requestDone = false;
         loadingDialog = new LoadingDialog(this);
@@ -68,7 +68,7 @@ public class addReviewActivity extends AppCompatActivity {
     private void setOnClickEnter() {
         this.enter.setOnClickListener(view -> {
             reviewModel.setTitle(title.getEditText().getText().toString());
-            reviewModel.setDescription(description.getEditText().getText().toString());
+            reviewModel.setText(description.getEditText().getText().toString());
             reviewModel.setHotel(hotel.getEditText().getText().toString());
             reviewModel.setZipCode(zipCode.getEditText().getText().toString());
             reviewModel.setRating((rating.getRating()));
@@ -106,13 +106,13 @@ public class addReviewActivity extends AppCompatActivity {
         String usernameStr = preferences.getString("username", null);
         if (usernameStr != null) {
             String url = getString(R.string.base_url) + "/reviews?username="+usernameStr;
-
+            Log.d("urlurl",url);
             try {
                 JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, reviewModel.toJson(), new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         responseDone = true;
-                        utils.showToast(context, getString(R.string.signin_ok));
+                        utils.showToast(context, getString(R.string.review_ok));
                     }
                 }, new Response.ErrorListener() {
                     @Override

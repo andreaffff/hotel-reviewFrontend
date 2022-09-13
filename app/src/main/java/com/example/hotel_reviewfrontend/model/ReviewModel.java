@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class ReviewModel {
     String title;
-    String description;
+    String text;
     String hotel;
     String zipCode;
     float rating;
@@ -24,12 +24,12 @@ public class ReviewModel {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getText() {
+        return text;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getHotel() {
@@ -62,7 +62,7 @@ public class ReviewModel {
 
         try {
             jsonObject.put("title", getTitle());
-            jsonObject.put("description", getDescription());
+            jsonObject.put("text", getText());
             jsonObject.put("hotel", getHotel());
             jsonObject.put("zipCode", getZipCode());
             jsonObject.put("rating", getRating());

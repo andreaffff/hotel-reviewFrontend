@@ -32,5 +32,7 @@
     <string name="aggiungiRecensione">my review</string>
     <string name="logout">logout</string>
     <string name="rating_review">review rate</string>
+    <string name="delete">user deleted successufylly</string>
+    <string name="user_not_found">user not found</string>
 
 </resources>

@@ -40,6 +40,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
     private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
+    private boolean foundUser;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +64,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
         context = getApplicationContext();
         card.setVisibility(View.INVISIBLE);
         this.setOnClickEnter();
-        this.assignValues();
-        this.requestHandler();
+        this.setOnClickDelete();
     }
 
     private void requestHandler() {
@@ -92,7 +92,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
         }).start();
     }
 
-    private void assignValues() {
+    private void findAndAssignValues() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = getString(R.string.base_url) + "/user/?username=" + username.getEditText().getText().toString();
         JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -120,12 +120,123 @@ public class AdminOnlyActivity extends AppCompatActivity{
         requestQueue.add(jsonReq);
 
 }
+protected void findAndDeleteUser(){
+    RequestQueue requestQueue = Volley.newRequestQueue(this);
+    String url = getString(R.string.base_url) + "/user/?username=" + usernameOuput.getText().toString();
+    JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+        @Override
+        public void onResponse(JSONObject res) {
+            responseDone = true;
+            try {
+
+                utils.showToast(context, getString(R.string.delete));
+                Log.i("usernameOutput", "usernameOutput");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            utils.showToast(context, getString(R.string.something_went_wrong));
+            Log.d("errore", "errore");
+
+            responseDone = true;
+        }
+    });
+    requestQueue.add(jsonReq);
+
+}
+
+    protected void UpdateRole(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = getString(R.string.base_url) + "/user/?username=" + username.getEditText().getText().toString();
+        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject res) {
+                Log.d("res", res.toString());
+                responseDone = true;
+                try {
+                    utils.showToast(context, getString(R.string.delete));
+                    Log.i("usernameOutput", "usernameOutput");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                utils.showToast(context, getString(R.string.something_went_wrong));
+                Log.d("errore", "errore");
+
+                responseDone = true;
+            }
+        });
+        requestQueue.add(jsonReq);
+
+    }
+
+    private void setOnclickSave(){
+        this.save.setOnClickListener(view -> {
+            card.setVisibility(View.INVISIBLE);
+        });
+    }
 
     private void setOnClickEnter() {
         this.enter.setOnClickListener(view -> {
-            card.setVisibility(View.VISIBLE);
-           // usernameOuput.setText(username.getEditText().getText().toString());
-            assignValues();
+            findUser();
+            if(foundUser){
+                card.setVisibility(View.VISIBLE);
+                requestHandler();
+                findAndAssignValues();
+            }
         });
     }
+    //TODO ON ERROR CONTROLLARE L ERRORE SE è CLIENT/SERVER
+
+    private void setOnClickDelete() {
+        this.delete.setOnClickListener(view -> {
+            card.setVisibility(View.INVISIBLE);
+            card.setClickable(false);
+            findAndDeleteUser();
+        });
+    }
+
+    protected void findUser(){
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = getString(R.string.base_url) + "/user/?username=" + username.getEditText().getText().toString();
+        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject res) {
+                Log.d("res", res.toString());
+                responseDone = true;
+                try {
+                    Log.i("usernameOutput", "usernameOutput");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                foundUser = true;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error.toString().equals("com.android.volley.ServerError")) {
+                    utils.showToast(context, getString(R.string.user_not_found));
+                } else if (error.toString().equals("com.android.volley.TimeoutError")) {
+                    utils.showToast(context, getString(R.string.something_went_wrong));
+                }
+                Log.d("errore", "errore");
+
+                responseDone = true;
+                foundUser = false;
+            }
+        });
+        requestQueue.add(jsonReq);
+
+    }
+
 }

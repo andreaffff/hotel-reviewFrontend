@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".user.MyProfileActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
             <intent-filter>
@@ -44,7 +44,7 @@
 
 
         <activity
-            android:name=".user.MyProfileActivity"
+            android:name=".user.AdminOnlyActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
         </activity>

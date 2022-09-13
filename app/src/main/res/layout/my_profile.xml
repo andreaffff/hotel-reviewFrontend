@@ -2,21 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            tools:ignore="MissingConstraints">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@android:color/transparent">
 
                 <!-- Media -->
 
@@ -49,7 +46,6 @@
 
                     <Button
                         android:id="@+id/myReviewsBtn"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="165dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -59,7 +55,7 @@
 
                     <Button
                         android:id="@+id/updateBtn"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+
                         android:layout_width="165dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -82,6 +78,7 @@
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:text="@string/name"
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <TextView
@@ -90,6 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text=""
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline5" />
 
 
@@ -107,6 +105,7 @@
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:text="@string/surname"
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <TextView
@@ -115,6 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text=""
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline5" />
 
 
@@ -131,6 +131,7 @@
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:text="@string/email"
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <TextView
@@ -139,6 +140,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text=""
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline5" />
 
 
@@ -155,6 +157,7 @@
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:text="@string/address"
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <TextView
@@ -163,6 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text=""
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline5" />
 
 
@@ -179,6 +183,7 @@
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:text="@string/phone"
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <TextView
@@ -187,6 +192,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text=""
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline5" />
 
 
@@ -203,6 +209,7 @@
                         android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:text="@string/username"
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <TextView
@@ -211,6 +218,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text=""
+                        android:textColor="@color/white"
                         android:textAppearance="?attr/textAppearanceHeadline5" />
 
 
@@ -219,7 +227,7 @@
             </LinearLayout>
 
 
-        </com.google.android.material.card.MaterialCardView>
+
 
     </ScrollView>
 </RelativeLayout>

@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".user.AdminOnlyActivity"
+            android:name=".MainActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
             <intent-filter>

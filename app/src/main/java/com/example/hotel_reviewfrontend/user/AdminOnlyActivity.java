@@ -38,6 +38,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
     private Button save;
     private Context context;
     private LoadingDialog loadingDialog;
+    private String roleStr;
     private boolean requestDone;
     private boolean responseDone;
     private boolean foundUser;
@@ -65,6 +66,8 @@ public class AdminOnlyActivity extends AppCompatActivity{
         card.setVisibility(View.INVISIBLE);
         this.setOnClickEnter();
         this.setOnClickDelete();
+        this.setOnclickSave();
+       // this.setOnCLickSwitch();
     }
 
     private void requestHandler() {
@@ -79,6 +82,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
                     Thread.sleep(SLEEP);
                 } catch (InterruptedException ignored) {
                 }
+                findAndAssignValues();
                 requestDone = true;
             }
             while (!responseDone) {
@@ -98,6 +102,13 @@ public class AdminOnlyActivity extends AppCompatActivity{
         JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject res) {
+                try {
+                    if(res.getString("role").equals("admin") ) {
+                        role.setChecked(true);
+                    } else role.setChecked(false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Log.d("res", res.toString());
                 responseDone = true;
                 try {
@@ -149,17 +160,25 @@ protected void findAndDeleteUser(){
 
 }
 
-    protected void UpdateRole(){
+    protected void updateRole(){
+       String usernameStr= username.getEditText().getText().toString();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = getString(R.string.base_url) + "/user/?username=" + username.getEditText().getText().toString();
-        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+        String url = getString(R.string.base_url) + "/user/updateRole?username=" + usernameStr ;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("role",roleStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("url", url);
+        Log.e("jsonObject",jsonObject.toString());
+        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject res) {
-                Log.d("res", res.toString());
                 responseDone = true;
                 try {
-                    utils.showToast(context, getString(R.string.delete));
-                    Log.i("usernameOutput", "usernameOutput");
+                    utils.showToast(context, getString(R.string.role));
+                    Log.i("role", "role");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -169,7 +188,7 @@ protected void findAndDeleteUser(){
             @Override
             public void onErrorResponse(VolleyError error) {
                 utils.showToast(context, getString(R.string.something_went_wrong));
-                Log.d("errore", "errore");
+                Log.d("errore", error.toString());
 
                 responseDone = true;
             }
@@ -180,6 +199,10 @@ protected void findAndDeleteUser(){
 
     private void setOnclickSave(){
         this.save.setOnClickListener(view -> {
+            if(this.role.isChecked()){
+                this.roleStr = "admin";
+            }else this.roleStr = "basic";
+            updateRole();
             card.setVisibility(View.INVISIBLE);
         });
     }
@@ -190,11 +213,9 @@ protected void findAndDeleteUser(){
             if(foundUser){
                 card.setVisibility(View.VISIBLE);
                 requestHandler();
-                findAndAssignValues();
             }
         });
     }
-    //TODO ON ERROR CONTROLLARE L ERRORE SE è CLIENT/SERVER
 
     private void setOnClickDelete() {
         this.delete.setOnClickListener(view -> {

@@ -40,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginTop="20dp"
+        android:focusableInTouchMode="false"
         android:text="enter"
         android:textColor="@color/white" />
 
@@ -64,7 +65,7 @@
             android:layout_height="51dp"
             android:layout_marginTop="60dp"
             android:background="@color/quantum_purple700"
-            android:text="Role"
+            android:text="Admin"
             android:textColor="@color/white" />
 
         <Button

@@ -39,6 +39,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private Button update;
     private Button myReviews;
     private ImageButton logout;
+    private ImageButton deleteUser;
     private Context context;
     private LoadingDialog loadingDialog;
     private boolean requestDone;
@@ -60,6 +61,7 @@ public class MyProfileActivity extends AppCompatActivity {
         this.username = findViewById(R.id.username_txo);
         this.update = findViewById(R.id.updateBtn);
         this.myReviews = findViewById(R.id.myReviewsBtn);
+        this.deleteUser = findViewById(R.id.deleteBtn);
         this.logout = findViewById(R.id.logoutBtn);
         this.loadingDialog = new LoadingDialog(this);
         this.requestDone = false;
@@ -70,36 +72,33 @@ public class MyProfileActivity extends AppCompatActivity {
         this.requestHandler();
         this.setOnClickUpdateProfile();
         this.setOnClickLogout();
+        this.setOnClickDeleteUser();
     }
+    protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
+        responseDone = false;
+        requestDone = false;
 
-    private void setOnClickUpdateProfile() {
-        this.update.setOnClickListener(view -> {
-            Intent intent = new Intent(this, UpdateProfileActivity.class);
-            intent.putExtra("username", username.getText());
-            intent.putExtra("name", name.getText());
-            intent.putExtra("surname", surname.getText());
-            intent.putExtra("email", email.getText());
-            intent.putExtra("address", address.getText());
-            intent.putExtra("phone", phone.getText());
-            startActivity(intent);
+        new Thread(() -> {
+            utils.openLoadingDialog(loadingDialog, true);
 
-        });
+            while (!this.requestDone) {
+                try {
+                    Thread.sleep(SLEEP);
+                } catch (InterruptedException ignored) {
+                }
+                this.assignValues();
+                requestDone = true;
+            }
+            while (!responseDone) {
+                try {
+                    Thread.sleep(SLEEP);
+                } catch (InterruptedException ignored) {
+                }
+            }
+            utils.openLoadingDialog(loadingDialog, false);
 
+        }).start();
     }
-
-
-    private void setOnClickLogout() {
-        this.logout.setOnClickListener(view -> {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                context.deleteSharedPreferences("userData");
-            } else
-                context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
-        });
-    }
-
-
 
     protected void assignValues() { // Richiesta al server getOneUser
 
@@ -112,7 +111,6 @@ public class MyProfileActivity extends AppCompatActivity {
             JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject res) {
-                    Log.d("res", res.toString());
                     responseDone = true;
                     try {
                         username.setText(res.getString("username"));
@@ -143,21 +141,55 @@ public class MyProfileActivity extends AppCompatActivity {
 
     }
 
-    protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
+    private void setOnClickUpdateProfile() {
+        this.update.setOnClickListener(view -> {
+            Intent intent = new Intent(this, UpdateProfileActivity.class);
+            intent.putExtra("username", username.getText());
+            intent.putExtra("name", name.getText());
+            intent.putExtra("surname", surname.getText());
+            intent.putExtra("email", email.getText());
+            intent.putExtra("address", address.getText());
+            intent.putExtra("phone", phone.getText());
+            startActivity(intent);
+
+        });
+
+    }
+
+
+    private void setOnClickLogout() {
+        this.logout.setOnClickListener(view -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                context.deleteSharedPreferences("userData");
+            } else
+                context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
+        });
+    }
+    private void setOnClickDeleteUser() {
+        this.deleteUser.setOnClickListener(view -> {
+            //TODO inserire alert dialog che chiede la conferma dell'eliminazione
+            deleteUserHandler();
+        });
+    }
+    private void deleteUserHandler(){
         responseDone = false;
         requestDone = false;
-
+//TODO inserire if in cui controllo che è stata accettata l'eliminazione nell'alert dialog
         new Thread(() -> {
             utils.openLoadingDialog(loadingDialog, true);
 
             while (!this.requestDone) {
+                Log.d("requestDone","entra");
                 try {
                     Thread.sleep(SLEEP);
                 } catch (InterruptedException ignored) {
                 }
-                this.assignValues();
+                deleteUser();
                 requestDone = true;
             }
+            Log.d("requestDone","esce");
             while (!responseDone) {
                 try {
                     Thread.sleep(SLEEP);
@@ -167,5 +199,44 @@ public class MyProfileActivity extends AppCompatActivity {
             utils.openLoadingDialog(loadingDialog, false);
 
         }).start();
+
     }
+
+    private void deleteUser() {
+        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
+        String usernameStr = preferences.getString("username", null);
+        if (usernameStr != null) {
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            String url = getString(R.string.base_url) + "/user/?username=" + usernameStr;
+            JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject res) {
+                    responseDone = true;
+                    utils.showToast(context, getString(R.string.delete_user_ok));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        context.deleteSharedPreferences("userData");
+                    } else
+                        context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
+
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    startActivity(intent);
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    utils.showToast(context, getString(R.string.something_went_wrong));
+                    responseDone = true;
+                }
+            });
+            requestQueue.add(jsonReq);
+        }
+    }
+
+
+
+
+
+
 }

@@ -17,6 +17,22 @@
         android:theme="@style/Theme.HotelreviewFrontend"
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
+        <activity
+            android:name=".user.AdminOnlyActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+
+
+
+        </activity>
+
+        <activity
+            android:name=".user.MyProfileActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+
+        </activity>
+
 
         <activity
             android:name=".user.UpdatePasswordActivity"
@@ -24,7 +40,14 @@
             tools:ignore="Instantiatable">
                   </activity>
         <activity
-            android:name=".review.addReviewActivity"
+            android:name=".review.AddReviewActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
             <intent-filter>
@@ -34,27 +57,18 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
 
-
-
-        </activity>
 
         <activity
             android:name=".signInAndLogin.LoginActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
+
+
+
         </activity>
 
 
-        <activity
-            android:name=".user.MyProfileActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-        </activity>
 
         <activity
             android:name=".signInAndLogin.SigninActivity"

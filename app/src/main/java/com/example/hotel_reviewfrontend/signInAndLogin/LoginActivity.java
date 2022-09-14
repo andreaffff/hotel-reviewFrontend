@@ -100,13 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 utils.openLoadingDialog(loadingDialog, false);
                 if (responseSuccess) {
-                    SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("username", usernameStr);
-                    editor.putString("password", passwordStr);
-                    editor.apply();
-                    Intent intent = new Intent(this, MyProfileActivity.class); //TODO mettere home al posto di MyProfile
-                    startActivity(intent);
+
                 }
 
             }).start();
@@ -130,7 +124,18 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     responseDone = true;
-                    responseSuccess = true;
+                    SharedPreferences preferences = context.getSharedPreferences("userData", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    try {
+                        editor.putString("username", usernameStr);
+                        editor.putString("password", passwordStr);
+                        editor.putString("role", response.getString("role"));
+                        editor.apply();
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    Intent intent = new Intent(context, MyProfileActivity.class); //TODO mettere home al posto di MyProfile
+                    startActivity(intent);
                     utils.showToast(context, getString(R.string.login_ok));
                 }
             }, new Response.ErrorListener() {

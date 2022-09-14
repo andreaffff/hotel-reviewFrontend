@@ -22,6 +22,10 @@
     <string name="login">Login</string>
     <string name ="go_to_sign_in">Go to signIn</string>
     <string name ="review_ok">Your review is inserted successfully</string>
+    <string name ="review_already_in_DB">You have already done a review for this hotel</string>
+    <string name ="zipCode_5_numeric">Zip Code must have 5 numeric characters</string>
+    <string name ="delete_user_ok">Your account is deleted successfully </string>
+
 
 
     <string name="update_user_ok">Your profile is updated successfully</string>
@@ -40,6 +44,6 @@
     <string name="delete">user deleted successufylly</string>
     <string name="user_not_found">user not found</string>
     <string name="role">Role updated successfully</string>
-    <string name="aggiungiRecensione">add review</string>
+    <string name="add_review">add review</string>
 
 </resources>

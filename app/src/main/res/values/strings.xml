@@ -40,5 +40,6 @@
     <string name="delete">user deleted successufylly</string>
     <string name="user_not_found">user not found</string>
     <string name="role">Role updated successfully</string>
+    <string name="aggiungiRecensione">add review</string>
 
 </resources>

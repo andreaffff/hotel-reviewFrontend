@@ -74,52 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
-    private void setOnClickSignup() {
-        this.signinButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, SigninActivity.class);
-            startActivity(intent);
-        });
-
-    }
-
-    private void login(String usernameStr, String passwordStr) throws JSONException {
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = getString(R.string.base_url) + "/user/login";
-        JSONObject jsonObject = new JSONObject();
-
-
-        try {
-            jsonObject.put("username", usernameStr);
-            jsonObject.put("password", passwordStr);
-            JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    responseDone = true;
-                    responseSuccess = true;
-                    utils.showToast(context, getString(R.string.login_ok));
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                    responseDone = true;
-                    responseSuccess = false;
-
-                    if (error.toString().equals("com.android.volley.AuthFailureError")) {
-                        utils.showToast(context, getString(R.string.username_or_password_wrong));
-                    } else if (error.toString().equals("com.android.volley.TimeoutError")) {
-                        utils.showToast(context, getString(R.string.something_went_wrong));
-                    }
-                }
-            });
-            requestQueue.add(jsonReq);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void requestHandler() {
 
         if (!usernameStr.isEmpty() || !passwordStr.isEmpty()) {
@@ -161,6 +115,55 @@ public class LoginActivity extends AppCompatActivity {
             utils.showToast(context, getString(R.string.empty_fields));
         }
     }
+
+    private void login(String usernameStr, String passwordStr) throws JSONException {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = getString(R.string.base_url) + "/user/login";
+        JSONObject jsonObject = new JSONObject();
+
+
+        try {
+            jsonObject.put("username", usernameStr);
+            jsonObject.put("password", passwordStr);
+            JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    responseDone = true;
+                    responseSuccess = true;
+                    utils.showToast(context, getString(R.string.login_ok));
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    responseDone = true;
+                    responseSuccess = false;
+
+                    if (error.toString().equals("com.android.volley.AuthFailureError")) {
+                        utils.showToast(context, getString(R.string.username_or_password_wrong));
+                    } else if (error.toString().equals("com.android.volley.TimeoutError")) {
+                        utils.showToast(context, getString(R.string.something_went_wrong));
+                    }
+                }
+            });
+            requestQueue.add(jsonReq);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void setOnClickSignup() {
+        this.signinButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SigninActivity.class);
+            startActivity(intent);
+        });
+
+    }
+
+
+
 }
 
 

@@ -79,7 +79,7 @@ public class SigninActivity extends AppCompatActivity {
         this.phone = findViewById(R.id.phone_txi);
         this.username = findViewById(R.id.username_txi);
         this.password = findViewById(R.id.password_txi);
-        this.register = findViewById(R.id.changePassword);
+        this.register = findViewById(R.id.enter_Btn);
         this.confirmPassword = findViewById(R.id.confirmPassword_txi);
         this.loadingDialog = new LoadingDialog(this);
         toast = new Toast(this);

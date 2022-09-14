@@ -183,6 +183,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             requestQueue.add(jsonReq);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                context.deleteSharedPreferences("userData");
+            } else
+                context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
         }
     }
 

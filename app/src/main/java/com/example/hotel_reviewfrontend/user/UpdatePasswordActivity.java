@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +19,9 @@ import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 public class UpdatePasswordActivity extends AppCompatActivity {
     TextInputLayout oldPassword;
@@ -38,45 +34,85 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     String confirmPasswordStr;
     Context context;
     LoadingDialog loadingDialog;
-
+    Boolean responseDone = false;
+    Boolean requestDone = false;
+    final int SLEEP = 500;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password_update_activity);
-
+        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
+        String passwordPreference = preferences.getString("password", null);
         this.initializeComponents();
-        this.setOnClickSave();
+
     }
-    private void initializeComponents(){
+
+    private void initializeComponents() {
         oldPassword = findViewById(R.id.oldPsw_txi);
         newPassword = findViewById(R.id.newPsw_txi);
         confirmPassword = findViewById(R.id.confirmNewPsw_txi);
-        save = findViewById(R.id.changePassword);
+        save = findViewById(R.id.enter_Btn);
         context = getApplicationContext();
         utils = new Utils();
-        //loadingDialog = new LoadingDialog(this);
+        responseDone = false;
+        requestDone = false;
+        loadingDialog = new LoadingDialog(this);
+        this.setOnClickSave();
     }
-    private void setOnClickSave(){
 
-        this.save.setOnClickListener(view->{
-            //utils.openLoadingDialog(loadingDialog,true);
-            oldPasswordStr = oldPassword.getEditText().getText().toString();
-            newPasswordStr = newPassword.getEditText().getText().toString();
-            confirmPasswordStr = confirmPassword.getEditText().getText().toString();
+    private void setOnClickSave() {
 
-            if(confirmPasswordStr.equals(newPasswordStr) && confirmPasswordStr.length()>7){
-                updatePassword();
-            } else if(confirmPasswordStr.length()<7){
-                utils.showToast(this,getString(R.string.password_too_short));
-            }else{
-                utils.showToast(this,getString(R.string.passwords_not_match));
-            }
-
+        this.save.setOnClickListener(view -> {
+            requestHandler();
         });
     }
-    private void updatePassword(){
+
+    protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
+        responseDone = false;
+        requestDone = false;
+
+        oldPasswordStr = oldPassword.getEditText().getText().toString();
+        newPasswordStr = newPassword.getEditText().getText().toString();
+        confirmPasswordStr = confirmPassword.getEditText().getText().toString();
+
+
+        new Thread(() -> {
+
+            if (confirmPasswordStr.equals(newPasswordStr) && confirmPasswordStr.length() >= 7
+                    && !oldPasswordStr.equals(newPasswordStr)) {
+                utils.openLoadingDialog(loadingDialog, true);
+                while (!this.requestDone) {
+                    try {
+                        Thread.sleep(SLEEP);
+                    } catch (InterruptedException ignored) {
+                    }
+                    this.updatePassword();
+                    requestDone = true;
+                }
+                while (!responseDone) {
+                    try {
+                        Thread.sleep(SLEEP);
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+                utils.openLoadingDialog(loadingDialog, false);
+
+            } else if (confirmPasswordStr.length() < 7) {
+                utils.showToast(this, getString(R.string.password_too_short));
+            } else if (!confirmPasswordStr.equals(newPasswordStr)) {
+                utils.showToast(this, getString(R.string.passwords_not_match));
+            } else if(oldPasswordStr.equals(newPasswordStr)){
+                utils.showToast(this, getString(R.string.new_password_equal_old_password));
+            }else
+                utils.showToast(this, getString(R.string.something_went_wrong));
+
+
+        }).start();
+    }
+
+    private void updatePassword() {
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
         if (usernamePreference != null) {
@@ -84,21 +120,29 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             String url = getString(R.string.base_url) + "/user/updatePassword?username=" + usernamePreference;
             JsonObjectRequest jsonReq = null;
             JSONObject jsonObject = new JSONObject();
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("password", newPasswordStr);
+            editor.apply();
 
 
             try {
-                jsonObject.put("oldValue",oldPasswordStr);
-                jsonObject.put("newValue",newPasswordStr);
+                jsonObject.put("oldValue", oldPasswordStr);
+                jsonObject.put("newValue", newPasswordStr);
                 jsonReq = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject res) {
-                        //utils.openLoadingDialog(loadingDialog,false);
+                        responseDone = true;
                         utils.showToast(context, getString(R.string.update_password_ok));
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        utils.showToast(context, getString(R.string.something_went_wrong));
+                        responseDone = true;
+
+                        if(error.toString().equals("com.android.volley.AuthFailureError")){
+                            utils.showToast(context, getString(R.string.password_wrong));
+                        }else
+                            utils.showToast(context, getString(R.string.something_went_wrong));
                     }
                 });
             } catch (Exception e) {
@@ -113,6 +157,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
             } else
                 context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
         }
-
     }
+
+
 }

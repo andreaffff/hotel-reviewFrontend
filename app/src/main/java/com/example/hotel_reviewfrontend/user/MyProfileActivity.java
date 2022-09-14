@@ -50,33 +50,6 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.my_profile);
         this.initializeComponents();
     }
-
-    private void setOnClickUpdateProfile() {
-        this.update.setOnClickListener(view -> {
-            Intent intent = new Intent(this, UpdateProfileActivity.class);
-            intent.putExtra("username", username.getText());
-            intent.putExtra("name", name.getText());
-            intent.putExtra("surname", surname.getText());
-            intent.putExtra("email", email.getText());
-            intent.putExtra("address", address.getText());
-            intent.putExtra("phone", phone.getText());
-            startActivity(intent);
-
-        });
-
-    }
-
-    private void setOnClickLogout() {
-        this.logout.setOnClickListener(view -> {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                context.deleteSharedPreferences("userData");
-            } else
-                context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
-        });
-    }
-
     private void initializeComponents() {
 
         this.name = findViewById(R.id.name_txo);
@@ -93,10 +66,40 @@ public class MyProfileActivity extends AppCompatActivity {
         this.responseDone = false;
         utils = new Utils();
         context = getApplicationContext();
+
         this.requestHandler();
         this.setOnClickUpdateProfile();
         this.setOnClickLogout();
     }
+
+    private void setOnClickUpdateProfile() {
+        this.update.setOnClickListener(view -> {
+            Intent intent = new Intent(this, UpdateProfileActivity.class);
+            intent.putExtra("username", username.getText());
+            intent.putExtra("name", name.getText());
+            intent.putExtra("surname", surname.getText());
+            intent.putExtra("email", email.getText());
+            intent.putExtra("address", address.getText());
+            intent.putExtra("phone", phone.getText());
+            startActivity(intent);
+
+        });
+
+    }
+
+
+    private void setOnClickLogout() {
+        this.logout.setOnClickListener(view -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                context.deleteSharedPreferences("userData");
+            } else
+                context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
+        });
+    }
+
+
 
     protected void assignValues() { // Richiesta al server getOneUser
 
@@ -135,8 +138,6 @@ public class MyProfileActivity extends AppCompatActivity {
                 }
             });
             requestQueue.add(jsonReq);
-        } else {
-
         }
 
 

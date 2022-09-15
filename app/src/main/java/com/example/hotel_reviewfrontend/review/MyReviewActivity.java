@@ -46,9 +46,8 @@ public class MyReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_review_activity);
         recyclerView = findViewById(R.id.myReviewRecyclerView);
-        this.initializeComponents();
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        this.initializeComponents();
 
     }
     private void initializeComponents() {
@@ -65,12 +64,14 @@ public class MyReviewActivity extends AppCompatActivity {
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernameStr = preferences.getString("username", null);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        ReviewModel reviewModel = new ReviewModel();
+
         String url = getString(R.string.base_url) + "/reviews/byusername?username=" + usernameStr;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
+                    ReviewModel reviewModel;
                     for (int i = 0; i < response.length(); i++) {
                         try {
+                            reviewModel = new ReviewModel();
                             reviewModel.setUsername(response.getJSONObject(i).getString("username"));
                             reviewModel.setText(response.getJSONObject(i).getString("text"));
                             reviewModel.setTitle(response.getJSONObject(i).getString("title"));
@@ -85,7 +86,7 @@ public class MyReviewActivity extends AppCompatActivity {
                         }
                     }
                     this.responseDone = true;
-                    populateRecyclerView();
+                    createRVItem();
                 },
                 error -> {
                     Log.e("error", error.toString());
@@ -96,9 +97,10 @@ public class MyReviewActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-    public void populateRecyclerView() {
+    public void createRVItem(){
         try {
-            adapter = new RecyclerViewAdapter(this, reviewModels);
+            adapter = new RecyclerViewAdapter(this,
+                    reviewModels);
             recyclerView.setAdapter(adapter);
         } catch (Exception e) {
             e.printStackTrace();

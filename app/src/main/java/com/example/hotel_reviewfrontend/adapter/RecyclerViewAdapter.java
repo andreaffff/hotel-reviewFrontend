@@ -1,7 +1,6 @@
 package com.example.hotel_reviewfrontend.adapter;
 
 import android.content.Context;
-import android.media.tv.TvContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.ReviewModel;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>  {
     Context context;
@@ -40,11 +37,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
         try {
-            holder.user.setText("User:" + reviewModels.get(position).getUsername());
-            holder.title.setText("Title:" +reviewModels.get(position).getTitle());
-            holder.text.setText(reviewModels.get(position).getText());
-            holder.hotel.setText(reviewModels.get(position).getHotel());
-            holder.zipCode.setText(reviewModels.get(position).getZipCode());
+            holder.user.setText(" "+"User:" +" "+ reviewModels.get(position).getUsername());
+            holder.title.setText(" "+"Title:" + " " + reviewModels.get(position).getTitle());
+            holder.text.setText(" "+"Text:" + " " + reviewModels.get(position).getText());
+            holder.hotel.setText(" "+"Hotel:" + " " + reviewModels.get(position).getHotel());
+            holder.zipCode.setText(" "+"Zip Code:" + " " + reviewModels.get(position).getZipCode());
             holder.ratingBar.setRating( reviewModels.get(position).getRating());
         } catch (Exception e) {
             e.printStackTrace();

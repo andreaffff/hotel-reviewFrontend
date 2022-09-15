@@ -13,29 +13,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.ReviewModel;
 
-
 import java.util.ArrayList;
 
-
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder>  {
+public class HotelRecyclerViewAdapter extends RecyclerView.Adapter<HotelRecyclerViewAdapter.MyViewHolder>{
     Context context;
     ArrayList<ReviewModel> reviewModels;
 
-    public HomeRecyclerViewAdapter(Context context, ArrayList<ReviewModel> reviewModels) {
+    public HotelRecyclerViewAdapter(Context context, ArrayList<ReviewModel> reviewModels) {
         this.context = context;
         this.reviewModels = reviewModels;
     }
-
     @NonNull
     @Override
-    public HomeRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HotelRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_row, parent, false);
-        return new HomeRecyclerViewAdapter.MyViewHolder(view);
+
+        View view = inflater.inflate(R.layout.recycler_row_hotel, parent, false);
+        return new HotelRecyclerViewAdapter.MyViewHolder(view);
     }
-    //TODO RISOLVERE HARDCODING
+
     @Override
-    public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         try {
             holder.user.setText(" "+"User:" +" "+ reviewModels.get(position).getUsername());
             holder.title.setText(" "+"Title:" + " " + reviewModels.get(position).getTitle());
@@ -58,12 +56,12 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         RatingBar ratingBar;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            user = itemView.findViewById(R.id.username_review);
-            title = itemView.findViewById(R.id.title_review);
-            text = itemView.findViewById(R.id.text_review);
-            hotel = itemView.findViewById(R.id.hotel_review);
-            zipCode = itemView.findViewById(R.id.zipCode_review);
-            ratingBar = itemView.findViewById(R.id.ratingBar_review);
+            user = itemView.findViewById(R.id.hotel_username_review);
+            title = itemView.findViewById(R.id.hotel_title_review);
+            text = itemView.findViewById(R.id.hotel_text_review);
+            hotel = itemView.findViewById(R.id.hotel_name_review);
+            zipCode = itemView.findViewById(R.id.hotel_zipCode_review);
+            ratingBar = itemView.findViewById(R.id.hotel_ratingBar_review);
         }
     }
 }

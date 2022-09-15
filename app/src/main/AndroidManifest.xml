@@ -22,7 +22,16 @@
             android:name=".user.UpdatePasswordActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
-                  </activity>
+        </activity>
+
+        <activity
+            android:name=".review.HotelReviewActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+
+        </activity>
+
+
         <activity
             android:name=".review.HomeActivity"
             android:exported="true"
@@ -32,6 +41,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".user.MyProfileActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
         </activity>
 
         <activity
@@ -47,14 +63,11 @@
             android:name=".signInAndLogin.LoginActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
+
         </activity>
 
 
-        <activity
-            android:name=".user.MyProfileActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-        </activity>
+
 
         <activity
             android:name=".signInAndLogin.SigninActivity"

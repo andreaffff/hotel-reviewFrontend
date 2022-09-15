@@ -20,7 +20,7 @@
             android:background="@color/quantum_purple700">
 
             <TextView
-                android:id="@+id/username_review"
+                android:id="@+id/hotel_username_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -28,7 +28,7 @@
                 android:background="@drawable/border"/>
 
             <TextView
-                android:id="@+id/title_review"
+                android:id="@+id/hotel_title_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -36,7 +36,7 @@
                 android:background="@drawable/border"/>
 
             <TextView
-                android:id="@+id/text_review"
+                android:id="@+id/hotel_text_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -44,7 +44,7 @@
                 android:background="@drawable/border"/>
 
             <TextView
-                android:id="@+id/hotel_review"
+                android:id="@+id/hotel_name_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -52,7 +52,7 @@
                 android:background="@drawable/border"/>
 
             <TextView
-                android:id="@+id/zipCode_review"
+                android:id="@+id/hotel_zipCode_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -60,7 +60,7 @@
                 android:background="@drawable/border"/>
 
             <RatingBar
-                android:id="@+id/ratingBar_review"
+                android:id="@+id/hotel_ratingBar_review"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_gravity="right"

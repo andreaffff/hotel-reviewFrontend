@@ -85,13 +85,7 @@ public class MyReviewActivity extends AppCompatActivity {
                         }
                     }
                     this.responseDone = true;
-                    try {
-                        adapter = new RecyclerViewAdapter(this,
-                                reviewModels);
-                        recyclerView.setAdapter(adapter);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    populateRecyclerView();
                 },
                 error -> {
                     Log.e("error", error.toString());
@@ -100,5 +94,14 @@ public class MyReviewActivity extends AppCompatActivity {
                 }
         );
         requestQueue.add(jsonArrayRequest);
+    }
+
+    public void populateRecyclerView() {
+        try {
+            adapter = new RecyclerViewAdapter(this, reviewModels);
+            recyclerView.setAdapter(adapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

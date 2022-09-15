@@ -17,25 +17,25 @@ import com.example.hotel_reviewfrontend.model.ReviewModel;
 import java.util.ArrayList;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>  {
+public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder>  {
     Context context;
     ArrayList<ReviewModel> reviewModels;
 
-    public RecyclerViewAdapter(Context context, ArrayList<ReviewModel> reviewModels) {
+    public HomeRecyclerViewAdapter(Context context, ArrayList<ReviewModel> reviewModels) {
         this.context = context;
         this.reviewModels = reviewModels;
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HomeRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_row, parent, false);
-        return new RecyclerViewAdapter.MyViewHolder(view);
+        return new HomeRecyclerViewAdapter.MyViewHolder(view);
     }
     //TODO RISOLVERE HARDCODING
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.MyViewHolder holder, int position) {
         try {
             holder.user.setText(" "+"User:" +" "+ reviewModels.get(position).getUsername());
             holder.title.setText(" "+"Title:" + " " + reviewModels.get(position).getTitle());

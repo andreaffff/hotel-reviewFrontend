@@ -24,7 +24,7 @@
             tools:ignore="Instantiatable">
                   </activity>
         <activity
-            android:name=".review.addReviewActivity"
+            android:name=".review.HomeActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
             <intent-filter>

@@ -1,8 +1,5 @@
 package com.example.hotel_reviewfrontend.model;
 
-import android.widget.RatingBar;
-
-import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,11 +7,40 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class ReviewModel {
+
+    String username;
     String title;
     String text;
     String hotel;
     String zipCode;
+
+    public int getUpVote() {
+        return upVote;
+    }
+
+    public void setUpVote(int upVote) {
+        this.upVote = upVote;
+    }
+
+    public int getDownvote() {
+        return downvote;
+    }
+
+    public void setDownvote(int downvote) {
+        this.downvote = downvote;
+    }
+
+    int upVote;
+    int downvote;
     float rating;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getTitle() {
         return title;

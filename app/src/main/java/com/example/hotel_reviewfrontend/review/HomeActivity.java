@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     private boolean responseDone;
     private TextInputLayout searchBar;
     private Button searchBtn;
+    private Button profile;
     private HomeRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
    // ArrayList<ReviewModel> reviewModels = new ArrayList<>();
@@ -46,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         searchBar = findViewById(R.id.hotel_txi);
         searchBtn = findViewById(R.id.findHotel);
         recyclerView = findViewById(R.id.myReviewRecyclerView);
+        profile = findViewById(R.id.profile);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.initializeComponents();
 
@@ -59,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         context = getApplicationContext();
         getMyReviewsHandler();
         setOnClickSearch();
+        setOnClickProfile();
     }
 
     private void setOnClickSearch() {
@@ -66,7 +69,12 @@ public class HomeActivity extends AppCompatActivity {
             getReviewsByHotel();
         });
     }
-
+    private void setOnClickProfile(){
+        this.profile.setOnClickListener(view -> {
+            Intent intent = new Intent(this, MyProfileActivity.class);
+            startActivity(intent);
+        });
+    }
 
 
     private void getReviewsByHotel() {

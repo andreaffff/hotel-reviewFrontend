@@ -20,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
+import com.example.hotel_reviewfrontend.review.HomeActivity;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 
@@ -38,7 +39,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private TextView phone;
     private TextView address;
     private Button update;
-    private Button myReviews;
+    private Button home;
     private ImageButton logout;
     private ImageButton deleteUser;
     private Context context;
@@ -61,7 +62,7 @@ public class MyProfileActivity extends AppCompatActivity {
         this.phone = findViewById(R.id.phone_txo);
         this.username = findViewById(R.id.username_txo);
         this.update = findViewById(R.id.updateBtn);
-        this.myReviews = findViewById(R.id.myReviewsBtn);
+        this.home = findViewById(R.id.home);
         this.deleteUser = findViewById(R.id.deleteBtn);
         this.logout = findViewById(R.id.logoutBtn);
         this.loadingDialog = new LoadingDialog(this);
@@ -74,6 +75,7 @@ public class MyProfileActivity extends AppCompatActivity {
         this.setOnClickUpdateProfile();
         this.setOnClickLogout();
         this.setOnClickDeleteUser();
+        this.setOnClickHome();
     }
     protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
         responseDone = false;
@@ -166,6 +168,13 @@ public class MyProfileActivity extends AppCompatActivity {
                 context.deleteSharedPreferences("userData");
             } else
                 context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
+        });
+    }
+
+    private void setOnClickHome(){
+        this.home.setOnClickListener(view -> {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
         });
     }
     private void setOnClickDeleteUser() {

@@ -58,6 +58,7 @@
     <string name ="zipCode">Zip code </string>
     <string name ="enter">Enter </string>
     <string name="no_reviews_hotel">there are no reviews for this hotel</string>
+    <string name="home">home</string>
 
 
 </resources>

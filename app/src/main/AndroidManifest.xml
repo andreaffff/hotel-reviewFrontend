@@ -45,7 +45,13 @@
         </activity>
 
         <activity
-            android:name=".review.addReviewActivity"
+            android:name=".review.AddReviewActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity
+            android:name=".review.HomeActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
         </activity>
@@ -54,9 +60,6 @@
             android:name=".MainActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
-
-
-
         </activity>
 
         <activity

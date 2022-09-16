@@ -12,7 +12,7 @@
         android:weightSum="2"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/home"
+            android:id="@+id/profile"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"

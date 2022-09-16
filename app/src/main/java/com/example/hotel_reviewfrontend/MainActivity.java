@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.hotel_reviewfrontend.review.HomeActivity;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.user.MyProfileActivity;
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     editor.apply();
-                    Intent intent = new Intent(context, MyProfileActivity.class); //TODO mettere home
+                    Intent intent = new Intent(context, HomeActivity.class);
                     startActivity(intent);
                 }
             }, new Response.ErrorListener() {

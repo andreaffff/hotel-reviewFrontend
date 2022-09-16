@@ -17,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
+import com.example.hotel_reviewfrontend.review.HomeActivity;
 import com.example.hotel_reviewfrontend.user.MyProfileActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                     }catch(Exception e){
                         e.printStackTrace();
                     }
-                    Intent intent = new Intent(context, MyProfileActivity.class); //TODO mettere home al posto di MyProfile
+                    Intent intent = new Intent(context, HomeActivity.class); //TODO mettere home al posto di MyProfile
                     startActivity(intent);
                     utils.showToast(context, getString(R.string.login_ok));
                 }

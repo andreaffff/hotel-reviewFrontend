@@ -31,6 +31,13 @@
 
         </activity>
 
+        <activity
+            android:name=".user.AdminOnlyActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+
+        </activity>
+
 
         <activity
             android:name=".user.MyProfileActivity"
@@ -38,14 +45,15 @@
             tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
 
         </activity>
 
         <activity
-            android:name=".review.addReviewActivity"
+            android:name=".review.AddReviewActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
         </activity>
@@ -54,8 +62,6 @@
             android:name=".MainActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
-
-
 
         </activity>
 
@@ -66,7 +72,12 @@
 
         </activity>
 
+        <activity
+            android:name=".review.HomeActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
 
+        </activity>
 
 
         <activity

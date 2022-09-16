@@ -25,8 +25,7 @@ import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
-//TODO aggiungere controllo su inserimento di recensioni multiple sullo stesso hotel o qui o backend
-public class addReviewActivity extends AppCompatActivity {
+public class AddReviewActivity extends AppCompatActivity {
     TextInputLayout title;
     TextInputLayout description;
     TextInputLayout hotel;
@@ -77,27 +76,31 @@ public class addReviewActivity extends AppCompatActivity {
     private void requestHandler(){
         responseDone = false;
         requestDone = false;
+        if(reviewModel.getZipCode().length()==5
+                && reviewModel.getZipCode().matches("[0-9]+")) {
+            new Thread(() -> {
+                utils.openLoadingDialog(loadingDialog, true);
 
-        new Thread(() -> {
-            utils.openLoadingDialog(loadingDialog, true);
-
-            while (!this.requestDone) {
-                try {
-                    Thread.sleep(SLEEP);
-                } catch (InterruptedException ignored) {
+                while (!this.requestDone) {
+                    try {
+                        Thread.sleep(SLEEP);
+                    } catch (InterruptedException ignored) {
+                    }
+                    this.addReview();
+                    requestDone = true;
                 }
-                this.addReview();
-                requestDone = true;
-            }
-            while (!responseDone) {
-                try {
-                    Thread.sleep(SLEEP);
-                } catch (InterruptedException ignored) {
+                while (!responseDone) {
+                    try {
+                        Thread.sleep(SLEEP);
+                    } catch (InterruptedException ignored) {
+                    }
                 }
-            }
-            utils.openLoadingDialog(loadingDialog, false);
+                utils.openLoadingDialog(loadingDialog, false);
 
-        }).start();
+            }).start();
+        }else{
+            utils.showToast(context, getString(R.string.zipCode_5_numeric));
+        }
     }
     private void addReview(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -105,7 +108,6 @@ public class addReviewActivity extends AppCompatActivity {
         String usernameStr = preferences.getString("username", null);
         if (usernameStr != null) {
             String url = getString(R.string.base_url) + "/reviews?username="+usernameStr;
-            Log.d("urlurl",url);
             try {
                 JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, reviewModel.toJson(), new Response.Listener<JSONObject>() {
                     @Override
@@ -117,8 +119,10 @@ public class addReviewActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         responseDone = true;
-
-                        utils.showToast(context, getString(R.string.something_went_wrong));
+                        if(error.toString().equals("com.android.volley.ClientError")) {
+                            utils.showToast(context, getString(R.string.review_already_in_DB));
+                        }else
+                            utils.showToast(context, getString(R.string.something_went_wrong));
 
                     }
                 });

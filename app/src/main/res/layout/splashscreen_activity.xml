@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="200dp"
-        android:text="HOTEL ADVISOR"
+        android:text="@string/title_app"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="50dp">
@@ -21,7 +21,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="300dp"
         android:textAlignment="center"
-        android:text="WELCOME"
+        android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="50dp">
 

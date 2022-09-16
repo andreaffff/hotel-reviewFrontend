@@ -21,7 +21,7 @@
         android:id="@+id/username_txi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="@string/username"
         android:layout_marginTop="40dp"
         android:textColorHint="@color/white"
         >
@@ -39,7 +39,7 @@
         app:endIconMode="password_toggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password"
         android:textColorHint="@color/white"
         android:layout_marginTop="40dp">
         <com.google.android.material.textfield.TextInputEditText

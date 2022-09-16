@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.user.MyProfileActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,21 +27,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen_activity);
-
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        SharedPreferences preferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
         String passwordPreference = preferences.getString("password", null);
         //TODO controllo ruolo attraverso risposta login del backend
-        Log.d("passwordPreference",passwordPreference);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = getString(R.string.base_url) + "/user/login";
         JSONObject jsonObject = new JSONObject();
         Context context = getApplicationContext();
+
 
 
         try {
@@ -49,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
             JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    SharedPreferences preferences = context.getSharedPreferences("userData", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    try {
+                        editor.putString("role", response.getString("role"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    editor.apply();
                     Intent intent = new Intent(context, MyProfileActivity.class); //TODO mettere home
                     startActivity(intent);
                 }

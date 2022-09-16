@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:textColorHint="@color/white"
-                android:hint="Nome">
+                android:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                android:hint="Cognome">
+                android:hint="@string/surname">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                android:hint="Email">
+                android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                android:hint="Address">
+                android:hint="@string/address">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                android:hint="Mobile">
+                android:hint="@string/phone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                android:hint="Username">
+                android:hint="@string/username">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                android:hint="Password">
+                android:hint="@string/password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:inputType="textPassword"
@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                android:hint=" Conferma password">
+                android:hint="@string/confirm_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:inputType="textPassword"
@@ -157,7 +157,7 @@
                 android:layout_gravity="right"
                 android:layout_marginTop="20dp"
                 android:background="@color/quantum_purple700"
-                android:text="Invio"
+                android:text="@string/enter"
                 android:textColor="@color/white" />
         </LinearLayout>
 

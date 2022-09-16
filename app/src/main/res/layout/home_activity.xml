@@ -12,12 +12,15 @@
         android:weightSum="2"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:layout_marginTop="20dp"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"/>
+            android:layout_marginEnd="5dp"
+            android:text="profile"
+            android:textSize="12dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/hotel_txi"
@@ -28,8 +31,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:textColorHint="@color/white"
-            android:hint="Hotel"
-            >
+            android:hint="Hotel">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -40,13 +42,15 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/adminOnly"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_marginTop="20sp"
             android:layout_marginEnd="5dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.5"
+            android:text="Admin Only"
+            android:visibility="invisible"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,10 +71,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="506dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,11 +85,20 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myReviewRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="418dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="0dp" />
+
+        <ImageButton
+            android:id="@+id/addReviewBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/new_review">
+
+        </ImageButton>
     </LinearLayout>
+
 
 </LinearLayout>

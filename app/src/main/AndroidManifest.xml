@@ -33,7 +33,7 @@
 
 
         <activity
-            android:name=".review.HomeActivity"
+            android:name=".user.MyProfileActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
             <intent-filter>
@@ -45,7 +45,7 @@
         </activity>
 
         <activity
-            android:name=".user.MyProfileActivity"
+            android:name=".review.addReviewActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
         </activity>

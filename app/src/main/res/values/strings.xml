@@ -22,6 +22,8 @@
     <string name="login">Login</string>
     <string name ="go_to_sign_in">Go to signIn</string>
     <string name ="review_ok">Your review is inserted successfully</string>
+    <string name ="no_reviews_hotel">This hotel have no reviews</string>
+
 
 
     <string name="update_user_ok">Your profile is updated successfully</string>

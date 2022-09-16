@@ -22,7 +22,6 @@ import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.ReviewModel;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;

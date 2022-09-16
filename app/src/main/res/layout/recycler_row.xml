@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/border">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="403dp"
+            android:orientation="vertical"
+            android:weightSum="5"
+            android:background="@color/quantum_purple700">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/deleteReviewBtn"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/delete">
+
+                </ImageButton>
+
+                <ImageButton
+                    android:id="@+id/updateReviewBtn"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+
+                    android:src="@drawable/modifica">
+
+                </ImageButton>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/username_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:background="@drawable/border"/>
+
+            <TextView
+                android:id="@+id/title_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:background="@drawable/border"/>
+
+            <TextView
+                android:id="@+id/text_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:background="@drawable/border"/>
+
+            <TextView
+                android:id="@+id/hotel_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/white"
+                android:background="@drawable/border"/>
+
+            <TextView
+                android:id="@+id/zipCode_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:textColor="@color/white"
+                android:background="@drawable/border"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar_review"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="right"
+                android:isIndicator="true"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

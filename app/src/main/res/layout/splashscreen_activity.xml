@@ -5,34 +5,34 @@
     android:layout_gravity="center"
     android:background="@drawable/background">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="200dp"
-        android:text="@string/title_app"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="50dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="375dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="100dp"
+        android:orientation="vertical">
 
-    </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="200dp"
+            android:text="@string/welcome"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30sp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="300dp"
-        android:textAlignment="center"
-        android:text="@string/welcome"
-        android:textColor="@color/white"
-        android:textSize="50dp">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="@string/title_app"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30dp">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="435dp"
-        android:layout_marginLeft="175dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/icons8_hotel_a_3_stelle_64" />
-
+        </TextView>
+    </LinearLayout>
 </RelativeLayout>

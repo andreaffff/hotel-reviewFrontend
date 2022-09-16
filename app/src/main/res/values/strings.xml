@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">hotel-reviewFrontend</string>
     <string name ="title_app">HOTEL ADVISOR </string>
-    <string name ="welcome">WELCOME </string>
+    <string name ="welcome">WELCOME TO</string>
     <string name="invalid_email">invalid email</string>
     <string name="loading">Loading...</string>
     <string name="empty_fields">empty fields! All fields are required</string>
@@ -57,8 +57,7 @@
     <string name ="hotel">Hotel </string>
     <string name ="zipCode">Zip code </string>
     <string name ="enter">Enter </string>
-
-
+    <string name="no_reviews_hotel">there are no reviews for this hotel</string>
 
 
 </resources>

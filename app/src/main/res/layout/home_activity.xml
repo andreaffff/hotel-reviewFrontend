@@ -4,40 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="2">
+
         <Button
             android:id="@+id/home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="5dp"
+            android:layout_weight="0.5"
             android:text="profile"
-            android:textSize="12dp"/>
+            android:textSize="12dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/hotel_txi"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="5dp"
-            android:textColorHint="@color/white"
-            android:hint="Hotel">
+            android:layout_weight="1"
+            android:hint="Hotel"
+            android:textColorHint="@color/white">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/quantum_purple700"
-                android:textColor="@color/white"
-                android:layout_weight="1"/>
+                android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,18 +53,20 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="0.5"
             android:text="Admin Only"
-            android:visibility="invisible"/>
+            android:visibility="visible" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/findHotel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="20sp"
             android:layout_marginEnd="5dp"
             android:text="find">
 

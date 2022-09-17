@@ -35,8 +35,8 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_gravity="right"
-                    android:layout_marginTop="40dp"
                     android:layout_marginLeft="230dp"
+                    android:layout_marginTop="40dp"
                     android:src="@drawable/logout_icon_icons_com_51025">
 
                 </ImageButton>

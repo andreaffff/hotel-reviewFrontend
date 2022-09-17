@@ -22,15 +22,15 @@ import com.example.hotel_reviewfrontend.utils.Utils;
 import java.util.ArrayList;
 
 public class HotelReviewActivity extends AppCompatActivity {
-    private Utils utils;
     final int SLEEP = 500;
+    ArrayList<ReviewModel> reviewModels = new ArrayList<>();
+    private Utils utils;
     private Context context;
     private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
     private HotelRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
-    ArrayList<ReviewModel> reviewModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +95,6 @@ public class HotelReviewActivity extends AppCompatActivity {
                                 reviewModel.setTitle(response.getJSONObject(i).getString("title"));
                                 reviewModel.setHotel(response.getJSONObject(i).getString("hotel"));
                                 reviewModel.setZipCode(response.getJSONObject(i).getString("zipCode"));
-                                reviewModel.setUpVote(Integer.parseInt(response.getJSONObject(i).getString("upvote")));
-                                reviewModel.setDownvote(Integer.parseInt(response.getJSONObject(i).getString("upvote")));
                                 reviewModel.setRating((float) response.getJSONObject(i).getDouble("rating"));
                                 reviewModels.add(reviewModel);
                             } catch (Exception e) {
@@ -104,7 +102,6 @@ public class HotelReviewActivity extends AppCompatActivity {
                             }
                         }
                         createRVItem();
-
 
 
                     } else {

@@ -6,68 +6,67 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/border">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="355dp"
+            android:background="@color/quantum_purple700"
             android:orientation="vertical"
-            android:weightSum="5"
-            android:background="@color/quantum_purple700">
+            android:weightSum="5">
 
             <TextView
                 android:id="@+id/hotel_username_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:textColor="@color/white"
-                android:background="@drawable/border"/>
+                android:background="@drawable/border"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/hotel_title_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:textColor="@color/white"
-                android:background="@drawable/border"/>
+                android:background="@drawable/border"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/hotel_text_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:textColor="@color/white"
-                android:background="@drawable/border"/>
+                android:background="@drawable/border"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/hotel_name_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/white"
-                android:background="@drawable/border"/>
+                android:background="@drawable/border"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/hotel_zipCode_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:textColor="@color/white"
-                android:background="@drawable/border"/>
+                android:background="@drawable/border"
+                android:textColor="@color/white" />
 
             <RatingBar
                 android:id="@+id/hotel_ratingBar_review"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_gravity="right"
-                android:isIndicator="true"
                 android:layout_weight="1"
                 android:background="@drawable/border"
-                />
+                android:isIndicator="true" />
 
         </LinearLayout>
 

@@ -12,26 +12,24 @@
         android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/admin_man_person_user_icon_127232"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp"
+        android:src="@drawable/admin_man_person_user_icon_127232" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_txi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
-        android:hint="Username"
         android:layout_marginTop="40dp"
-        >
+        android:hint="Username"
+        android:textColorHint="@color/white">
 
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/quantum_purple700"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,19 +44,19 @@
         android:textColor="@color/white" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:id="@+id/cardView"
         android:background="@drawable/background">
 
         <TextView
             android:id="@+id/username_output"
             android:layout_width="match_parent"
             android:layout_height="51dp"
-            android:textColor="@color/white"
+            android:background="@color/quantum_purple700"
             android:text=""
-            android:background="@color/quantum_purple700" />
+            android:textColor="@color/white" />
 
         <Switch
             android:id="@+id/roleSwitch"
@@ -80,16 +78,16 @@
             android:id="@+id/goToProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
             android:text="go to profile" />
 
         <Button
             android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
             android:layout_gravity="right"
+            android:layout_marginTop="120dp"
             android:text="save" />
 
     </androidx.cardview.widget.CardView>

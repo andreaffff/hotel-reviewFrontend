@@ -25,7 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
 
-public class AddReviewActivity extends AppCompatActivity {
+public class UpdateReviewActivity extends AppCompatActivity {
     final int SLEEP = 500;
     TextInputLayout title;
     TextInputLayout description;
@@ -39,6 +39,8 @@ public class AddReviewActivity extends AppCompatActivity {
     Utils utils;
     ReviewModel reviewModel;
     Context context;
+    int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class AddReviewActivity extends AppCompatActivity {
     }
 
     private void initializeComponents() {
+
         title = findViewById(R.id.title_txi);
         description = findViewById(R.id.description);
         hotel = findViewById(R.id.hotel_txi);
@@ -59,6 +62,13 @@ public class AddReviewActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(this);
         utils = new Utils();
         reviewModel = new ReviewModel();
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+        title.getEditText().setText(intent.getStringExtra("title"));
+        description.getEditText().setText(intent.getStringExtra("description"));
+        hotel.getEditText().setText(intent.getStringExtra("hotel"));
+        zipCode.getEditText().setText(intent.getStringExtra("zipCode"));
+        rating.setRating(intent.getFloatExtra("rating", 0));
         context = getApplicationContext();
         this.setOnClickEnter();
     }
@@ -87,7 +97,7 @@ public class AddReviewActivity extends AppCompatActivity {
                         Thread.sleep(SLEEP);
                     } catch (InterruptedException ignored) {
                     }
-                    this.addReview();
+                    this.updateReview();
                     requestDone = true;
                 }
                 while (!responseDone) {
@@ -104,14 +114,14 @@ public class AddReviewActivity extends AppCompatActivity {
         }
     }
 
-    private void addReview() {
+    private void updateReview() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernameStr = preferences.getString("username", null);
         if (usernameStr != null) {
-            String url = getString(R.string.base_url) + "/reviews?username=" + usernameStr;
+            String url = getString(R.string.base_url) + "/reviews?id=" + id;
             try {
-                JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, reviewModel.toJson(), new Response.Listener<JSONObject>() {
+                JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.PUT, url, reviewModel.toJson(), new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         responseDone = true;
@@ -121,11 +131,7 @@ public class AddReviewActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         responseDone = true;
-                        if (error.toString().equals("com.android.volley.ClientError")) {
-                            utils.showToast(context, getString(R.string.review_already_in_DB));
-                        } else
-                            utils.showToast(context, getString(R.string.something_went_wrong));
-
+                        utils.showToast(context, getString(R.string.something_went_wrong));
                     }
                 });
                 requestQueue.add(jsonReq);
@@ -142,4 +148,6 @@ public class AddReviewActivity extends AppCompatActivity {
         }
     }
 }
+
+
 

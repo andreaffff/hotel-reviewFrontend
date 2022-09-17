@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,25 +20,26 @@ import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.adapter.HomeRecyclerViewAdapter;
 import com.example.hotel_reviewfrontend.model.ReviewModel;
-import com.example.hotel_reviewfrontend.user.MyProfileActivity;
+import com.example.hotel_reviewfrontend.user.AdminOnlyActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
+    private final int SLEEP = 500;
+    // ArrayList<ReviewModel> reviewModels = new ArrayList<>();
+    ArrayList<ReviewModel> myReviewModels = new ArrayList<>();
     private Utils utils;
     private Context context;
-    private final int SLEEP = 500;
     private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
     private TextInputLayout searchBar;
     private Button searchBtn;
+    private Button adminOnlyBtn;
     private HomeRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
-   // ArrayList<ReviewModel> reviewModels = new ArrayList<>();
-    ArrayList<ReviewModel> myReviewModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home_activity);
         searchBar = findViewById(R.id.hotel_txi);
         searchBtn = findViewById(R.id.findHotel);
+        adminOnlyBtn = findViewById(R.id.adminOnly);
         recyclerView = findViewById(R.id.myReviewRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.initializeComponents();
@@ -57,8 +60,14 @@ public class HomeActivity extends AppCompatActivity {
         this.responseDone = false;
         utils = new Utils();
         context = getApplicationContext();
+        SharedPreferences preferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        String role = preferences.getString("role", "");
+        if (!role.equals("admin")) {
+            adminOnlyBtn.setVisibility(View.INVISIBLE);
+        }
         getMyReviewsHandler();
         setOnClickSearch();
+        setOnClickAdminOnly();
     }
 
     private void setOnClickSearch() {
@@ -67,6 +76,13 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void setOnClickAdminOnly() {
+        this.adminOnlyBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AdminOnlyActivity.class);
+            startActivity(intent);
+
+        });
+    }
 
 
     private void getReviewsByHotel() {
@@ -119,8 +135,6 @@ public class HomeActivity extends AppCompatActivity {
                             reviewModel.setTitle(response.getJSONObject(i).getString("title"));
                             reviewModel.setHotel(response.getJSONObject(i).getString("hotel"));
                             reviewModel.setZipCode(response.getJSONObject(i).getString("zipCode"));
-                            reviewModel.setUpVote(Integer.parseInt(response.getJSONObject(i).getString("upvote")));
-                            reviewModel.setDownvote(Integer.parseInt(response.getJSONObject(i).getString("upvote")));
                             reviewModel.setRating((float) response.getJSONObject(i).getDouble("rating"));
                             myReviewModels.add(reviewModel);
                         } catch (Exception e) {

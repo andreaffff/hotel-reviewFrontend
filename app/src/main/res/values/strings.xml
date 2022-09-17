@@ -49,7 +49,7 @@
     <string name="logout">logout</string>
     <string name="rating_review">review rate</string>
     <string name="delete">user deleted successufylly</string>
-    <string name="user_not_found">user not found</string>
+    <string name="user_not_found">User not found</string>
     <string name="role">Role updated successfully</string>
     <string name="add_review">add review</string>
     <string name ="title">Title </string>

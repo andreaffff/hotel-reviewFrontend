@@ -173,8 +173,11 @@ public class AdminOnlyActivity extends AppCompatActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                utils.showToast(context, getString(R.string.something_went_wrong));
-                Log.d("errore", "errore");
+                if(error.toString().equals("com.android.volley.ServerError"))
+                    utils.showToast(context, getString(R.string.user_not_found));
+                else
+                    utils.showToast(context, getString(R.string.something_went_wrong));
+
 
                 responseDone = true;
             }
@@ -199,9 +202,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
             public void onResponse(JSONObject res) {
                 responseDone = true;
                 try {
-
                     utils.showToast(context, getString(R.string.delete));
-                    Log.i("usernameOutput", "usernameOutput");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -211,7 +212,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
             @Override
             public void onErrorResponse(VolleyError error) {
                 utils.showToast(context, getString(R.string.something_went_wrong));
-                Log.d("errore", "errore");
+
 
                 responseDone = true;
             }

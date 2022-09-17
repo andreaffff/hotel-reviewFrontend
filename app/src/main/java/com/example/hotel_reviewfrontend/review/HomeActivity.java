@@ -21,16 +21,17 @@ import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.adapter.HomeRecyclerViewAdapter;
 import com.example.hotel_reviewfrontend.model.ReviewModel;
 import com.example.hotel_reviewfrontend.user.AdminOnlyActivity;
-import com.example.hotel_reviewfrontend.user.MyProfileActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
+    private final int SLEEP = 500;
+    // ArrayList<ReviewModel> reviewModels = new ArrayList<>();
+    ArrayList<ReviewModel> myReviewModels = new ArrayList<>();
     private Utils utils;
     private Context context;
-    private final int SLEEP = 500;
     private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
@@ -39,8 +40,6 @@ public class HomeActivity extends AppCompatActivity {
     private Button adminOnlyBtn;
     private HomeRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
-   // ArrayList<ReviewModel> reviewModels = new ArrayList<>();
-    ArrayList<ReviewModel> myReviewModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +60,9 @@ public class HomeActivity extends AppCompatActivity {
         this.responseDone = false;
         utils = new Utils();
         context = getApplicationContext();
-        SharedPreferences preferences = getSharedPreferences("userData",Context.MODE_PRIVATE);
-        String role = preferences.getString("role","");
-        if(!role.equals("admin")){
+        SharedPreferences preferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        String role = preferences.getString("role", "");
+        if (!role.equals("admin")) {
             adminOnlyBtn.setVisibility(View.INVISIBLE);
         }
         getMyReviewsHandler();
@@ -77,12 +76,12 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void setOnClickAdminOnly(){
+    private void setOnClickAdminOnly() {
         this.adminOnlyBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, AdminOnlyActivity.class);
             startActivity(intent);
 
-    });
+        });
     }
 
 

@@ -25,7 +25,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
 
-public class UpdateReviewActivity  extends AppCompatActivity {
+public class UpdateReviewActivity extends AppCompatActivity {
+    final int SLEEP = 500;
     TextInputLayout title;
     TextInputLayout description;
     TextInputLayout hotel;
@@ -33,10 +34,8 @@ public class UpdateReviewActivity  extends AppCompatActivity {
     RatingBar rating;
     Button enter;
     LoadingDialog loadingDialog;
-
     Boolean responseDone;
     Boolean requestDone;
-    final int SLEEP = 500;
     Utils utils;
     ReviewModel reviewModel;
     Context context;
@@ -50,7 +49,7 @@ public class UpdateReviewActivity  extends AppCompatActivity {
         this.initializeComponents();
     }
 
-    private void initializeComponents(){
+    private void initializeComponents() {
 
         title = findViewById(R.id.title_txi);
         description = findViewById(R.id.description);
@@ -64,15 +63,16 @@ public class UpdateReviewActivity  extends AppCompatActivity {
         utils = new Utils();
         reviewModel = new ReviewModel();
         Intent intent = getIntent();
-        id = intent.getIntExtra("id",0);
+        id = intent.getIntExtra("id", 0);
         title.getEditText().setText(intent.getStringExtra("title"));
         description.getEditText().setText(intent.getStringExtra("description"));
         hotel.getEditText().setText(intent.getStringExtra("hotel"));
         zipCode.getEditText().setText(intent.getStringExtra("zipCode"));
-        rating.setRating(intent.getFloatExtra("rating",0));
+        rating.setRating(intent.getFloatExtra("rating", 0));
         context = getApplicationContext();
         this.setOnClickEnter();
     }
+
     private void setOnClickEnter() {
         this.enter.setOnClickListener(view -> {
             reviewModel.setTitle(title.getEditText().getText().toString());
@@ -83,10 +83,11 @@ public class UpdateReviewActivity  extends AppCompatActivity {
             requestHandler();
         });
     }
-    private void requestHandler(){
+
+    private void requestHandler() {
         responseDone = false;
         requestDone = false;
-        if(reviewModel.getZipCode().length()==5
+        if (reviewModel.getZipCode().length() == 5
                 && reviewModel.getZipCode().matches("[0-9]+")) {
             new Thread(() -> {
                 utils.openLoadingDialog(loadingDialog, true);
@@ -108,16 +109,17 @@ public class UpdateReviewActivity  extends AppCompatActivity {
                 utils.openLoadingDialog(loadingDialog, false);
 
             }).start();
-        }else{
+        } else {
             utils.showToast(context, getString(R.string.zipCode_5_numeric));
         }
     }
-    private void updateReview(){
+
+    private void updateReview() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernameStr = preferences.getString("username", null);
         if (usernameStr != null) {
-            String url = getString(R.string.base_url) + "/reviews?id="+id;
+            String url = getString(R.string.base_url) + "/reviews?id=" + id;
             try {
                 JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.PUT, url, reviewModel.toJson(), new Response.Listener<JSONObject>() {
                     @Override

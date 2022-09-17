@@ -15,7 +15,7 @@ import com.example.hotel_reviewfrontend.model.ReviewModel;
 
 import java.util.ArrayList;
 
-public class HotelRecyclerViewAdapter extends RecyclerView.Adapter<HotelRecyclerViewAdapter.MyViewHolder>{
+public class HotelRecyclerViewAdapter extends RecyclerView.Adapter<HotelRecyclerViewAdapter.MyViewHolder> {
     Context context;
     ArrayList<ReviewModel> reviewModels;
 
@@ -23,6 +23,7 @@ public class HotelRecyclerViewAdapter extends RecyclerView.Adapter<HotelRecycler
         this.context = context;
         this.reviewModels = reviewModels;
     }
+
     @NonNull
     @Override
     public HotelRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,12 +36,12 @@ public class HotelRecyclerViewAdapter extends RecyclerView.Adapter<HotelRecycler
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         try {
-            holder.user.setText(" "+"User:" +" "+ reviewModels.get(position).getUsername());
-            holder.title.setText(" "+"Title:" + " " + reviewModels.get(position).getTitle());
-            holder.text.setText(" "+"Text:" + " " + reviewModels.get(position).getText());
-            holder.hotel.setText(" "+"Hotel:" + " " + reviewModels.get(position).getHotel());
-            holder.zipCode.setText(" "+"Zip Code:" + " " + reviewModels.get(position).getZipCode());
-            holder.ratingBar.setRating( reviewModels.get(position).getRating());
+            holder.user.setText(" " + "User:" + " " + reviewModels.get(position).getUsername());
+            holder.title.setText(" " + "Title:" + " " + reviewModels.get(position).getTitle());
+            holder.text.setText(" " + "Text:" + " " + reviewModels.get(position).getText());
+            holder.hotel.setText(" " + "Hotel:" + " " + reviewModels.get(position).getHotel());
+            holder.zipCode.setText(" " + "Zip Code:" + " " + reviewModels.get(position).getZipCode());
+            holder.ratingBar.setRating(reviewModels.get(position).getRating());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,9 +52,10 @@ public class HotelRecyclerViewAdapter extends RecyclerView.Adapter<HotelRecycler
         return reviewModels.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView user, title, text, hotel, zipCode;
         RatingBar ratingBar;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             user = itemView.findViewById(R.id.hotel_username_review);

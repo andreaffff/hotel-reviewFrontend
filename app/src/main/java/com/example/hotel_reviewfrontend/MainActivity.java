@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,14 +15,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.review.HomeActivity;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
-import com.example.hotel_reviewfrontend.user.MyProfileActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-//TODO qui e nel login va inserito il ruolo nelle shared preference
+    //TODO qui e nel login va inserito il ruolo nelle shared preference
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
@@ -41,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         String url = getString(R.string.base_url) + "/user/login";
         JSONObject jsonObject = new JSONObject();
         Context context = getApplicationContext();
-
 
 
         try {

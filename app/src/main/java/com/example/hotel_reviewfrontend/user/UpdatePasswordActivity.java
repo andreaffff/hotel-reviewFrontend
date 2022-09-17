@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONObject;
 
 public class UpdatePasswordActivity extends AppCompatActivity {
+    final int SLEEP = 500;
     TextInputLayout oldPassword;
     TextInputLayout newPassword;
     TextInputLayout confirmPassword;
@@ -36,8 +37,6 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
     Boolean responseDone = false;
     Boolean requestDone = false;
-    final int SLEEP = 500;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +102,9 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                 utils.showToast(this, getString(R.string.password_too_short));
             } else if (!confirmPasswordStr.equals(newPasswordStr)) {
                 utils.showToast(this, getString(R.string.passwords_not_match));
-            } else if(oldPasswordStr.equals(newPasswordStr)){
+            } else if (oldPasswordStr.equals(newPasswordStr)) {
                 utils.showToast(this, getString(R.string.new_password_equal_old_password));
-            }else
+            } else
                 utils.showToast(this, getString(R.string.something_went_wrong));
 
 
@@ -139,9 +138,9 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         responseDone = true;
 
-                        if(error.toString().equals("com.android.volley.AuthFailureError")){
+                        if (error.toString().equals("com.android.volley.AuthFailureError")) {
                             utils.showToast(context, getString(R.string.password_wrong));
-                        }else
+                        } else
                             utils.showToast(context, getString(R.string.something_went_wrong));
                     }
                 });

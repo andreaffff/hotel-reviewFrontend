@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.review.HomeActivity;
-import com.example.hotel_reviewfrontend.user.MyProfileActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -27,6 +25,7 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private final int SLEEP = 500;
     Utils utils;
     private TextInputLayout username;
     private TextInputLayout password;
@@ -38,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
     private boolean requestDone = false;
     private boolean responseDone = false;
     private boolean responseSuccess = false;
-    private final int SLEEP = 500;
     private Context context;
 
     @Override
@@ -75,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
     private void requestHandler() {
 
         if (!usernameStr.isEmpty() || !passwordStr.isEmpty()) {
@@ -132,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("password", passwordStr);
                         editor.putString("role", response.getString("role"));
                         editor.apply();
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     Intent intent = new Intent(context, HomeActivity.class); //TODO mettere home al posto di MyProfile
@@ -167,7 +166,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
 
 
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.RatingBar;
 
@@ -25,7 +24,9 @@ import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
+
 public class AddReviewActivity extends AppCompatActivity {
+    final int SLEEP = 500;
     TextInputLayout title;
     TextInputLayout description;
     TextInputLayout hotel;
@@ -33,10 +34,8 @@ public class AddReviewActivity extends AppCompatActivity {
     RatingBar rating;
     Button enter;
     LoadingDialog loadingDialog;
-
     Boolean responseDone;
     Boolean requestDone;
-    final int SLEEP = 500;
     Utils utils;
     ReviewModel reviewModel;
     Context context;
@@ -48,7 +47,7 @@ public class AddReviewActivity extends AppCompatActivity {
         this.initializeComponents();
     }
 
-    private void initializeComponents(){
+    private void initializeComponents() {
         title = findViewById(R.id.title_txi);
         description = findViewById(R.id.description);
         hotel = findViewById(R.id.hotel_txi);
@@ -63,6 +62,7 @@ public class AddReviewActivity extends AppCompatActivity {
         context = getApplicationContext();
         this.setOnClickEnter();
     }
+
     private void setOnClickEnter() {
         this.enter.setOnClickListener(view -> {
             reviewModel.setTitle(title.getEditText().getText().toString());
@@ -73,10 +73,11 @@ public class AddReviewActivity extends AppCompatActivity {
             requestHandler();
         });
     }
-    private void requestHandler(){
+
+    private void requestHandler() {
         responseDone = false;
         requestDone = false;
-        if(reviewModel.getZipCode().length()==5
+        if (reviewModel.getZipCode().length() == 5
                 && reviewModel.getZipCode().matches("[0-9]+")) {
             new Thread(() -> {
                 utils.openLoadingDialog(loadingDialog, true);
@@ -98,16 +99,17 @@ public class AddReviewActivity extends AppCompatActivity {
                 utils.openLoadingDialog(loadingDialog, false);
 
             }).start();
-        }else{
+        } else {
             utils.showToast(context, getString(R.string.zipCode_5_numeric));
         }
     }
-    private void addReview(){
+
+    private void addReview() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernameStr = preferences.getString("username", null);
         if (usernameStr != null) {
-            String url = getString(R.string.base_url) + "/reviews?username="+usernameStr;
+            String url = getString(R.string.base_url) + "/reviews?username=" + usernameStr;
             try {
                 JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.POST, url, reviewModel.toJson(), new Response.Listener<JSONObject>() {
                     @Override
@@ -119,9 +121,9 @@ public class AddReviewActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         responseDone = true;
-                        if(error.toString().equals("com.android.volley.ClientError")) {
+                        if (error.toString().equals("com.android.volley.ClientError")) {
                             utils.showToast(context, getString(R.string.review_already_in_DB));
-                        }else
+                        } else
                             utils.showToast(context, getString(R.string.something_went_wrong));
 
                     }

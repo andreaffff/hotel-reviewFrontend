@@ -25,7 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AdminOnlyActivity extends AppCompatActivity{
+public class AdminOnlyActivity extends AppCompatActivity {
     private final int SLEEP = 500;
     private Utils utils;
     private TextInputLayout username;
@@ -70,20 +70,18 @@ public class AdminOnlyActivity extends AppCompatActivity{
     }
 
 
-
-
-    protected void updateRole(){
-       String usernameStr= username.getEditText().getText().toString();
+    protected void updateRole() {
+        String usernameStr = username.getEditText().getText().toString();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = getString(R.string.base_url) + "/user/updateRole?username=" + usernameStr ;
+        String url = getString(R.string.base_url) + "/user/updateRole?username=" + usernameStr;
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("role",roleStr);
+            jsonObject.put("role", roleStr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Log.e("url", url);
-        Log.e("jsonObject",jsonObject.toString());
+        Log.e("jsonObject", jsonObject.toString());
         JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject res) {
@@ -109,11 +107,11 @@ public class AdminOnlyActivity extends AppCompatActivity{
 
     }
 
-    private void setOnclickSave(){
+    private void setOnclickSave() {
         this.save.setOnClickListener(view -> {
-            if(this.role.isChecked()){
+            if (this.role.isChecked()) {
                 this.roleStr = "admin";
-            }else this.roleStr = "basic";
+            } else this.roleStr = "basic";
             updateRole();
             card.setVisibility(View.INVISIBLE);
         });
@@ -158,9 +156,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
             @Override
             public void onResponse(JSONObject res) {
                 try {
-                    if(res.getString("role").equals("admin") ) {
-                        role.setChecked(true);
-                    } else role.setChecked(false);
+                    role.setChecked(res.getString("role").equals("admin"));
                     usernameOutput.setText(res.getString("username"));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -173,7 +169,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(error.toString().equals("com.android.volley.ServerError"))
+                if (error.toString().equals("com.android.volley.ServerError"))
                     utils.showToast(context, getString(R.string.user_not_found));
                 else
                     utils.showToast(context, getString(R.string.something_went_wrong));
@@ -194,7 +190,7 @@ public class AdminOnlyActivity extends AppCompatActivity{
         });
     }
 
-    protected void deleteUser(){
+    protected void deleteUser() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = getString(R.string.base_url) + "/user/?username=" + usernameOutput.getText().toString();
         JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {

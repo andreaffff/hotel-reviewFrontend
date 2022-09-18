@@ -3,9 +3,11 @@ package com.example.hotel_reviewfrontend.review;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,19 +15,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.adapter.HomeRecyclerViewAdapter;
 import com.example.hotel_reviewfrontend.model.ReviewModel;
+import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.user.MyProfileActivity;
+import com.example.hotel_reviewfrontend.user.UpdateProfileActivity;
+import com.example.hotel_reviewfrontend.utils.OnClickAction;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements OnClickAction {
     private Utils utils;
     private Context context;
     private final int SLEEP = 500;
@@ -35,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextInputLayout searchBar;
     private Button searchBtn;
     private Button profile;
+    private ImageButton addReviews;
     private HomeRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
    // ArrayList<ReviewModel> reviewModels = new ArrayList<>();
@@ -46,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home_activity);
         searchBar = findViewById(R.id.hotel_txi);
         searchBtn = findViewById(R.id.findHotel);
+        addReviews= findViewById(R.id.addReviewBtn);
         recyclerView = findViewById(R.id.myReviewRecyclerView);
         profile = findViewById(R.id.profile);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         getMyReviewsHandler();
         setOnClickSearch();
         setOnClickProfile();
+        setOnClickAddReview();
     }
 
     private void setOnClickSearch() {
@@ -72,6 +85,13 @@ public class HomeActivity extends AppCompatActivity {
     private void setOnClickProfile(){
         this.profile.setOnClickListener(view -> {
             Intent intent = new Intent(this, MyProfileActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void setOnClickAddReview(){
+        this.addReviews.setOnClickListener(view -> {
+            Intent intent = new Intent(this, AddReviewActivity.class);
             startActivity(intent);
         });
     }
@@ -130,6 +150,7 @@ public class HomeActivity extends AppCompatActivity {
                             reviewModel.setUpVote(Integer.parseInt(response.getJSONObject(i).getString("upvote")));
                             reviewModel.setDownvote(Integer.parseInt(response.getJSONObject(i).getString("upvote")));
                             reviewModel.setRating((float) response.getJSONObject(i).getDouble("rating"));
+                            reviewModel.setId(response.getJSONObject(i).getInt("id"));
                             myReviewModels.add(reviewModel);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -150,10 +171,42 @@ public class HomeActivity extends AppCompatActivity {
     public void createRVItem() {
         try {
             adapter = new HomeRecyclerViewAdapter(this,
-                    myReviewModels);
+                    myReviewModels, this );
             recyclerView.setAdapter(adapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onDelete(int id) {
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = getString(R.string.base_url) + "/reviews?id="+ id  ;
+        JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject res) {
+                responseDone = true;
+                utils.showToast(context, getString(R.string.delete_reviews));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                utils.showToast(context, getString(R.string.something_went_wrong));
+                responseDone = true;
+            }
+        });
+        requestQueue.add(jsonReq);
+    }
+
+    @Override
+    public void onUpdate(int id, ReviewModel reviewModel) {
+        Intent intent = new Intent(this, UpdateReviewActivity.class);
+        intent.putExtra("id", reviewModel.getId());
+        intent.putExtra("title", reviewModel.getTitle());
+        intent.putExtra("text", reviewModel.getText());
+        intent.putExtra("hotel", reviewModel.getHotel());
+        intent.putExtra("zipCode", reviewModel.getZipCode());
+        intent.putExtra("rating", reviewModel.getRating());
+        startActivity(intent);
     }
 }

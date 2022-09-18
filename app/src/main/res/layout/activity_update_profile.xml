@@ -119,6 +119,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                    android:inputType="textFilter"
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"
                     android:background="@color/quantum_purple700"/>

@@ -59,6 +59,7 @@
     <string name ="enter">Enter </string>
     <string name="no_reviews_hotel">there are no reviews for this hotel</string>
     <string name="home">home</string>
+    <string name="delete_reviews">reviews deleted successfully</string>
 
 
 </resources>

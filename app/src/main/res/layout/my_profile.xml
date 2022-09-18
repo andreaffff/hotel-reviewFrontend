@@ -63,13 +63,13 @@
 
 
                 <Button
-                    android:id="@+id/myReviewsBtn"
+                    android:id="@+id/home"
                     android:layout_width="165dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginTop="60dp"
                     android:layout_marginRight="65dp"
-                    android:text="@string/my_reviews" />
+                    android:text="@string/home" />
 
                 <Button
                     android:id="@+id/updateBtn"

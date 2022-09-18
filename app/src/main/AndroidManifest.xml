@@ -19,52 +19,6 @@
         tools:targetApi="31" >
 
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".review.HomeActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-        </activity>
-
-        <activity
-            android:name=".signInAndLogin.LoginActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-        </activity>
-
-        <activity
-            android:name=".signInAndLogin.SigninActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-        </activity>
-
-        <activity
-            android:name=".user.AdminOnlyActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-        </activity>
-
-        <activity
-            android:name=".user.MyProfileActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-        </activity>
-
-        <activity
-            android:name=".user.UpdateProfileActivity"
-            android:exported="true"
-            tools:ignore="Instantiatable">
-        </activity>
-
-        <activity
             android:name=".user.UpdatePasswordActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
@@ -74,6 +28,20 @@
             android:name=".review.HotelReviewActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
+
+        </activity>
+
+
+        <activity
+            android:name=".user.MyProfileActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
 
         <activity
@@ -83,15 +51,37 @@
         </activity>
 
         <activity
-            android:name=".review.UpdateReviewActivity"
+            android:name=".review.HomeActivity"
             android:exported="true"
             tools:ignore="Instantiatable">
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity
+            android:name=".signInAndLogin.LoginActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+
         </activity>
 
 
 
 
+        <activity
+            android:name=".signInAndLogin.SigninActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+        </activity>
 
-
+        <activity
+            android:name=".user.UpdateProfileActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+        </activity>
     </application>
 </manifest>

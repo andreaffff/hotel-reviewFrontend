@@ -31,13 +31,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:hint="@string/name"
-                android:textColorHint="@color/white">
+                android:textColorHint="@color/white"
+                android:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/quantum_purple700" />
+                    android:background="@color/quantum_purple700"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,13 +47,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/surname"
-                android:textColorHint="@color/white">
+                android:textColorHint="@color/white"
+                android:hint="@string/surname">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700" />
+                    android:background="@color/quantum_purple700"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,13 +62,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/email"
-                android:textColorHint="@color/white">
+                android:textColorHint="@color/white"
+                android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700" />
+                    android:background="@color/quantum_purple700"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,13 +77,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/address"
-                android:textColorHint="@color/white">
+                android:textColorHint="@color/white"
+                android:hint="@string/address">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700" />
+                    android:background="@color/quantum_purple700"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,13 +93,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/phone"
-                android:textColorHint="@color/white">
+                android:textColorHint="@color/white"
+                android:hint="@string/phone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700" />
+                    android:background="@color/quantum_purple700"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,13 +108,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/username"
-                android:textColorHint="@color/white">
+                android:textColorHint="@color/white"
+                android:hint="@string/username">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700" />
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                    android:inputType="textFilter"
+                    android:background="@color/quantum_purple700"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,14 +125,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/password"
-                android:textColorHint="@color/white">
+                android:textColorHint="@color/white"
+                android:hint="@string/password">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700"
-                    android:inputType="textPassword" />
+                    android:background="@color/quantum_purple700"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -137,14 +140,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="@string/confirm_password"
-                android:textColorHint="@color/white">
+                android:textColorHint="@color/white"
+                android:hint="@string/confirm_password">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700"
-                    android:inputType="textPassword" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/quantum_purple700"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

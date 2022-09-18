@@ -20,9 +20,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
+import com.example.hotel_reviewfrontend.review.HomeActivity;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +39,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private TextView phone;
     private TextView address;
     private Button update;
-    private Button myReviews;
+    private Button home;
     private ImageButton logout;
     private ImageButton deleteUser;
     private Context context;
@@ -51,7 +53,6 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.my_profile);
         this.initializeComponents();
     }
-
     private void initializeComponents() {
 
         this.name = findViewById(R.id.name_txo);
@@ -61,7 +62,7 @@ public class MyProfileActivity extends AppCompatActivity {
         this.phone = findViewById(R.id.phone_txo);
         this.username = findViewById(R.id.username_txo);
         this.update = findViewById(R.id.updateBtn);
-        this.myReviews = findViewById(R.id.myReviewsBtn);
+        this.home = findViewById(R.id.home);
         this.deleteUser = findViewById(R.id.deleteBtn);
         this.logout = findViewById(R.id.logoutBtn);
         this.loadingDialog = new LoadingDialog(this);
@@ -74,8 +75,8 @@ public class MyProfileActivity extends AppCompatActivity {
         this.setOnClickUpdateProfile();
         this.setOnClickLogout();
         this.setOnClickDeleteUser();
+        this.setOnClickHome();
     }
-
     protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
         responseDone = false;
         requestDone = false;
@@ -170,14 +171,19 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void setOnClickHome(){
+        this.home.setOnClickListener(view -> {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+        });
+    }
     private void setOnClickDeleteUser() {
         this.deleteUser.setOnClickListener(view -> {
             //TODO inserire alert dialog che chiede la conferma dell'eliminazione
             deleteUserHandler();
         });
     }
-
-    private void deleteUserHandler() {
+    private void deleteUserHandler(){
         responseDone = false;
         requestDone = false;
 //TODO inserire if in cui controllo che è stata accettata l'eliminazione nell'alert dialog
@@ -185,7 +191,7 @@ public class MyProfileActivity extends AppCompatActivity {
             utils.openLoadingDialog(loadingDialog, true);
 
             while (!this.requestDone) {
-                Log.d("requestDone", "entra");
+                Log.d("requestDone","entra");
                 try {
                     Thread.sleep(SLEEP);
                 } catch (InterruptedException ignored) {
@@ -193,7 +199,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 deleteUser();
                 requestDone = true;
             }
-            Log.d("requestDone", "esce");
+            Log.d("requestDone","esce");
             while (!responseDone) {
                 try {
                     Thread.sleep(SLEEP);
@@ -237,6 +243,10 @@ public class MyProfileActivity extends AppCompatActivity {
             requestQueue.add(jsonReq);
         }
     }
+
+
+
+
 
 
 }

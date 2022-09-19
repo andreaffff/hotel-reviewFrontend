@@ -23,6 +23,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class LoginActivity extends AppCompatActivity {
 
     private final int SLEEP = 500;
@@ -67,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             responseSuccess = false;
             requestDone = false;
 
-            usernameStr = this.username.getEditText().getText().toString();
+            usernameStr = this.username.getEditText().getText().toString().toLowerCase(Locale.ROOT);
             passwordStr = this.password.getEditText().getText().toString();
             this.requestHandler();
         });

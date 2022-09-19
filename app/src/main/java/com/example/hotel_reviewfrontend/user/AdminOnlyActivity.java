@@ -25,6 +25,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class AdminOnlyActivity extends AppCompatActivity {
     private final int SLEEP = 500;
     private Utils utils;
@@ -34,14 +36,12 @@ public class AdminOnlyActivity extends AppCompatActivity {
     private TextView usernameOutput;
     private Switch role;
     private Button delete;
-    private Button profile;
     private Button save;
     private Context context;
     private LoadingDialog loadingDialog;
     private String roleStr;
     private boolean requestDone;
     private boolean responseDone;
-    private boolean foundUser;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,6 @@ public class AdminOnlyActivity extends AppCompatActivity {
         this.card = findViewById(R.id.cardView);
         this.role = findViewById(R.id.roleSwitch);
         this.delete = findViewById(R.id.deleteUser);
-        this.profile = findViewById(R.id.goToProfile);
         this.save = findViewById(R.id.saveBtn);
         this.loadingDialog = new LoadingDialog(this);
         this.requestDone = false;
@@ -157,7 +156,7 @@ public class AdminOnlyActivity extends AppCompatActivity {
             public void onResponse(JSONObject res) {
                 try {
                     role.setChecked(res.getString("role").equals("admin"));
-                    usernameOutput.setText(res.getString("username"));
+                    usernameOutput.setText(res.getString("username").toLowerCase(Locale.ROOT));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

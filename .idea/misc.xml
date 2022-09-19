@@ -21,19 +21,23 @@
         <entry key="..\:/Users/VALERIOVICCA/AndroidStudioProjects/hotel-reviewFrontend/app/src/main/res/layout/recycler_row_hotel_reviews.xml" value="0.1" />
         <entry key="..\:/Users/VALERIOVICCA/AndroidStudioProjects/hotel-reviewFrontend/app/src/main/res/layout/splashscreen_activity.xml" value="0.1" />
         <entry key="..\:/Users/VALERIOVICCA/AndroidStudioProjects/hotel-reviewFrontend/app/src/main/res/layout/update_review_activity.xml" value="0.1" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/activity_add_review.xml" value="0.1" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/activity_update_profile.xml" value="0.20962199312714777" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/admin_only_activity.xml" value="0.264" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/fragment_login.xml" value="0.4" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/fragment_review.xml" value="0.18984375" />
-        <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/fragment_signin.xml" value="0.25" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/fragment_signin.xml" value="0.1" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/fragment_user_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/home.xml" value="0.253125" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/home_activity.xml" value="0.264" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/hotel_review_page.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/loading_dialog.xml" value="0.264" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/my_profile.xml" value="0.4" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/password_update_activity.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/recycler_row_hotel.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/splashscreen_activity.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/update_review_activity.xml" value="0.14628623188405798" />
         <entry key="..\:/Users/andre/AndroidStudioProjects/hotelreviewFrontend/app/src/main/res/layout/users_profile.xml" value="0.253125" />
       </map>
     </option>

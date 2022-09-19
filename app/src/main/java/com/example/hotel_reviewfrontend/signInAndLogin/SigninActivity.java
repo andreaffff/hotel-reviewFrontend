@@ -1,6 +1,7 @@
 package com.example.hotel_reviewfrontend.signInAndLogin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -102,12 +104,15 @@ public class SigninActivity extends AppCompatActivity {
             user.setEmail(this.email.getEditText().getText().toString());
             user.setAddress(this.address.getEditText().getText().toString());
             user.setPhone(this.phone.getEditText().getText().toString());
-            user.setUsername(this.username.getEditText().getText().toString());
+            user.setUsername(this.username.getEditText().getText().toString().toLowerCase(Locale.ROOT));
             user.setPassword(this.password.getEditText().getText().toString());
             confirmPasswordString = this.confirmPassword.getEditText()
                     .getText().toString();
 
             this.requestHandler();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+
         });
     }
 

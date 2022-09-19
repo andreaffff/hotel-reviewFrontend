@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">hotel-reviewFrontend</string>
+    <string name="app_name">Hotel Advisor</string>
     <string name ="title_app">HOTEL ADVISOR </string>
     <string name ="welcome">WELCOME TO</string>
     <string name="invalid_email">invalid email</string>

@@ -43,6 +43,7 @@
         android:text="enter"
         android:textColor="@color/white" />
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -74,13 +75,6 @@
             android:layout_marginTop="120dp"
             android:text="delete" />
 
-        <Button
-            android:id="@+id/goToProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="120dp"
-            android:text="go to profile" />
 
         <Button
             android:id="@+id/saveBtn"

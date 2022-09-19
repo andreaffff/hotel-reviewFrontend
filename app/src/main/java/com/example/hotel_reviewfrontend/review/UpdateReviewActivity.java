@@ -75,18 +75,20 @@ public class UpdateReviewActivity extends AppCompatActivity {
 
     private void setOnClickEnter() {
         this.enter.setOnClickListener(view -> {
-            reviewModel.setTitle(title.getEditText().getText().toString());
-            reviewModel.setText(description.getEditText().getText().toString());
-            reviewModel.setHotel(hotel.getEditText().getText().toString());
-            reviewModel.setZipCode(zipCode.getEditText().getText().toString());
-            reviewModel.setRating((rating.getRating()));
             requestHandler();
+            Intent intent = new Intent(context, HomeActivity.class);
+            startActivity(intent);
         });
     }
 
     private void requestHandler() {
         responseDone = false;
         requestDone = false;
+        reviewModel.setTitle(title.getEditText().getText().toString());
+        reviewModel.setText(description.getEditText().getText().toString());
+        reviewModel.setHotel(hotel.getEditText().getText().toString());
+        reviewModel.setZipCode(zipCode.getEditText().getText().toString());
+        reviewModel.setRating((rating.getRating()));
         if (reviewModel.getZipCode().length() == 5
                 && reviewModel.getZipCode().matches("[0-9]+")) {
             new Thread(() -> {

@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,11 +40,9 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements OnClickAction {
     private final int SLEEP = 500;
-    // ArrayList<ReviewModel> reviewModels = new ArrayList<>();
     ArrayList<ReviewModel> myReviewModels = new ArrayList<>();
     private Utils utils;
     private Context context;
-    private final int SLEEP = 500;
     private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
@@ -54,8 +53,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
     private Button adminOnlyBtn;
     private HomeRecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
-   // ArrayList<ReviewModel> reviewModels = new ArrayList<>();
-    ArrayList<ReviewModel> myReviewModels = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
         setContentView(R.layout.home_activity);
         searchBar = findViewById(R.id.hotel_txi);
         searchBtn = findViewById(R.id.findHotel);
-        addReviews= findViewById(R.id.addReviewBtn);
+        addReviews = findViewById(R.id.addReviewBtn);
         adminOnlyBtn = findViewById(R.id.adminOnly);
         recyclerView = findViewById(R.id.myReviewRecyclerView);
         profile = findViewById(R.id.profile);
@@ -89,25 +87,26 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
         setOnClickProfile();
         setOnClickAddReview();
     }
-
     private void setOnClickSearch() {
         this.searchBtn.setOnClickListener(view -> {
             getReviewsByHotel();
         });
     }
-    private void setOnClickProfile(){
+
+    private void setOnClickProfile() {
         this.profile.setOnClickListener(view -> {
             Intent intent = new Intent(this, MyProfileActivity.class);
             startActivity(intent);
         });
     }
 
-    private void setOnClickAddReview(){
+    private void setOnClickAddReview() {
         this.addReviews.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddReviewActivity.class);
             startActivity(intent);
         });
     }
+
     private void setOnClickAdminOnly() {
         this.adminOnlyBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, AdminOnlyActivity.class);
@@ -169,6 +168,8 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
                             reviewModel.setZipCode(response.getJSONObject(i).getString("zipCode"));
                             reviewModel.setRating((float) response.getJSONObject(i).getDouble("rating"));
                             reviewModel.setId(response.getJSONObject(i).getInt("id"));
+                            reviewModel.setHotel(response.getJSONObject(i).getString("hotel"));
+                            reviewModel.setZipCode(response.getJSONObject(i).getString("zipCode"));
                             myReviewModels.add(reviewModel);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -189,7 +190,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
     public void createRVItem() {
         try {
             adapter = new HomeRecyclerViewAdapter(this,
-                    myReviewModels);
+                    myReviewModels, this);
             recyclerView.setAdapter(adapter);
         } catch (Exception e) {
             e.printStackTrace();
@@ -198,13 +199,15 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
 
     @Override
     public void onDelete(int id) {
-                RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = getString(R.string.base_url) + "/reviews?id="+ id  ;
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = getString(R.string.base_url) + "/reviews?id=" + id;
         JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.DELETE, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject res) {
                 responseDone = true;
                 utils.showToast(context, getString(R.string.delete_reviews));
+                Intent intent = new Intent(context, HomeActivity.class);
+                startActivity(intent);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -217,14 +220,20 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
     }
 
     @Override
-    public void onUpdate(int id, ReviewModel reviewModel) {
+    public void onUpdate(int id,    String hotel, String zipCode) {
         Intent intent = new Intent(this, UpdateReviewActivity.class);
-        intent.putExtra("id", reviewModel.getId());
-        intent.putExtra("title", reviewModel.getTitle());
-        intent.putExtra("text", reviewModel.getText());
-        intent.putExtra("hotel", reviewModel.getHotel());
-        intent.putExtra("zipCode", reviewModel.getZipCode());
-        intent.putExtra("rating", reviewModel.getRating());
-        startActivity(intent);
+        intent.putExtra("id", id);
+        intent.putExtra("hotel", hotel);
+        intent.putExtra("zipCode", zipCode);
+                startActivity(intent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 }

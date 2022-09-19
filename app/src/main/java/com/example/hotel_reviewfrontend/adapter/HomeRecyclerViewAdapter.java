@@ -43,13 +43,15 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.MyViewHolder holder, int position) {
         try {
-            holder.user.setText(" "+"User:" +" "+ reviewModels.get(position).getUsername());
-            holder.title.setText(" "+"Title:" + " " + reviewModels.get(position).getTitle());
-            holder.text.setText(" "+"Text:" + " " + reviewModels.get(position).getText());
-            holder.hotel.setText(" "+"Hotel:" + " " + reviewModels.get(position).getHotel());
-            holder.zipCode.setText(" "+"Zip Code:" + " " + reviewModels.get(position).getZipCode());
-            holder.ratingBar.setRating( reviewModels.get(position).getRating());
+            holder.userTw.setText(" "+"User:" +" "+ reviewModels.get(position).getUsername());
+            holder.titleTw.setText(" "+"Title:" + " " + reviewModels.get(position).getTitle());
+            holder.textTw.setText(" "+"Text:" + " " + reviewModels.get(position).getText());
+            holder.hotelTw.setText(" "+"Hotel:" + " " + reviewModels.get(position).getHotel());
+            holder.zipCodeTw.setText(" "+"Zip Code:" + " " + reviewModels.get(position).getZipCode());
+            holder.ratingBarI.setRating( reviewModels.get(position).getRating());
             holder.id = reviewModels.get(position).getId();
+            holder.hotel = reviewModels.get(position).getHotel();
+            holder.zipCode=reviewModels.get(position).getZipCode();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,27 +64,27 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public int id;
-        TextView user, title, text, hotel, zipCode;
-        RatingBar ratingBar;
+        public String user;
+        public String text;
+        public String hotel;
+        public String zipCode;
+        TextView userTw, titleTw, textTw, hotelTw, zipCodeTw;
+        RatingBar ratingBarI;
         ImageButton delete, update;
         Context context;
         OnClickAction onClickAction;
 
-
-
         public MyViewHolder(@NonNull View itemView, Context context, OnClickAction onClickAction) {
             super(itemView);
-            user = itemView.findViewById(R.id.username_review);
-            title = itemView.findViewById(R.id.title_review);
-            text = itemView.findViewById(R.id.text_review);
-            hotel = itemView.findViewById(R.id.hotel_review);
-            zipCode = itemView.findViewById(R.id.zipCode_review);
-            ratingBar = itemView.findViewById(R.id.ratingBar_review);
+            userTw = itemView.findViewById(R.id.username_review);
+            titleTw = itemView.findViewById(R.id.title_review);
+            textTw = itemView.findViewById(R.id.text_review);
+            hotelTw = itemView.findViewById(R.id.hotel_review);
+            zipCodeTw = itemView.findViewById(R.id.zipCode_review);
+            ratingBarI = itemView.findViewById(R.id.ratingBar_review);
             delete = itemView.findViewById(R.id.deleteReviewBtn);
             update = itemView.findViewById(R.id.updateReviewBtn);
             id = itemView.getId();
-            
-
             this.context = context;
             this.onClickAction = onClickAction;
             delete.setOnClickListener(this);
@@ -101,7 +103,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                     break;
                 case R.id.updateReviewBtn:
                     Toast.makeText(context,"update", Toast.LENGTH_SHORT ).show();
-                    onClickAction.onUpdate(id, new ReviewModel());
+                    onClickAction.onUpdate(id,  hotel,  zipCode);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + view.getId());

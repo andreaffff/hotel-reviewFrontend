@@ -37,6 +37,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements OnClickAction {
     private final int SLEEP = 500;
@@ -117,7 +118,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
 
 
     private void getReviewsByHotel() {
-        String hotelToSearch = searchBar.getEditText().getText().toString();
+        String hotelToSearch = searchBar.getEditText().getText().toString().toLowerCase(Locale.ROOT);
         Intent intent = new Intent(context, HotelReviewActivity.class);
         intent.putExtra("hotelToSearch", hotelToSearch);
         startActivity(intent);
@@ -228,12 +229,4 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
                 startActivity(intent);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory(Intent.CATEGORY_HOME);
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(homeIntent);
-    }
 }

@@ -19,6 +19,7 @@ import com.example.hotel_reviewfrontend.utils.OnClickAction;
 
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder>  {
@@ -46,7 +47,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             holder.userTw.setText(" "+"User:" +" "+ reviewModels.get(position).getUsername());
             holder.titleTw.setText(" "+"Title:" + " " + reviewModels.get(position).getTitle());
             holder.textTw.setText(" "+"Text:" + " " + reviewModels.get(position).getText());
-            holder.hotelTw.setText(" "+"Hotel:" + " " + reviewModels.get(position).getHotel());
+            holder.hotelTw.setText(" "+"Hotel:" + " " + reviewModels.get(position).getHotel().toLowerCase(Locale.ROOT));
             holder.zipCodeTw.setText(" "+"Zip Code:" + " " + reviewModels.get(position).getZipCode());
             holder.ratingBarI.setRating( reviewModels.get(position).getRating());
             holder.id = reviewModels.get(position).getId();

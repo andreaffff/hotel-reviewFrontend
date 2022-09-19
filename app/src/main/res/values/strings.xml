@@ -5,7 +5,7 @@
     <string name="invalid_email">invalid email</string>
     <string name="loading">Loading...</string>
     <string name="empty_fields">empty fields! All fields are required</string>
-    <string name="base_url">http://10.0.2.2:8080/hotel_review/api</string> <!-- perche android gira su una macchina virtuale -->
+    <string name="base_url">http://192.168.1.121:8080/hotel_review/api</string> <!--10.0.2.2 perche android gira su una macchina virtuale -->
     <string name="something_went_wrong">500 internal server error</string>
     <string name="passwords_not_match">Passwords entered do not match</string>
     <string name="password_too_short">Password must have at least 7 characters</string>
@@ -60,6 +60,7 @@
     <string name="no_reviews_hotel">there are no reviews for this hotel</string>
     <string name="home">home</string>
     <string name="delete_reviews">reviews deleted successfully</string>
+    <string name="changePassword">change password</string>
 
 
 </resources>

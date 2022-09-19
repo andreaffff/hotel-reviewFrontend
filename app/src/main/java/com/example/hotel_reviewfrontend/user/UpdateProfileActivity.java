@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.UserModel;
+import com.example.hotel_reviewfrontend.review.UpdateReviewActivity;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,6 +45,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private String phoneStr;
     private String addressStr;
     private Button save;
+    private Button passwordBtn;
     private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
@@ -62,6 +64,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         this.phone = findViewById(R.id.phone_txi);
         this.username = findViewById(R.id.username_txi);
         this.save = findViewById(R.id.saveBtn);
+        this.passwordBtn = findViewById(R.id.changePassword);
 
         context = getApplicationContext();
 
@@ -70,8 +73,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
         this.responseDone = false;
         this.requestUsernameDone = false;
         this.responseUsernameDone = false;
+
         user = new UserModel();
         utils = new Utils();
+
+        this.getFromIntent();
+        this.setOnClickSave();
+        this.setOnCLickPassword();
     }
 
 
@@ -81,8 +89,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_profile);
 
         this.initializeComponents();
-        this.getFromIntent();
-        this.setOnClickSave();
     }
 
     private void setOnClickSave() {
@@ -266,6 +272,13 @@ public class UpdateProfileActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(user.getEmail());
         return matcher.matches();
 
+    }
+
+    private void setOnCLickPassword(){
+        this.passwordBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, UpdatePasswordActivity.class);
+            startActivity(intent);
+        });
     }
 
 }

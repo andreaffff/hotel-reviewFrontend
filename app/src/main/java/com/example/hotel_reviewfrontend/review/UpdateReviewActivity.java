@@ -25,6 +25,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class UpdateReviewActivity extends AppCompatActivity {
     final int SLEEP = 500;
     TextInputLayout title;
@@ -86,7 +88,7 @@ public class UpdateReviewActivity extends AppCompatActivity {
         requestDone = false;
         reviewModel.setTitle(title.getEditText().getText().toString());
         reviewModel.setText(description.getEditText().getText().toString());
-        reviewModel.setHotel(hotel.getEditText().getText().toString());
+        reviewModel.setHotel(hotel.getEditText().getText().toString().toLowerCase(Locale.ROOT));
         reviewModel.setZipCode(zipCode.getEditText().getText().toString());
         reviewModel.setRating((rating.getRating()));
         if (reviewModel.getZipCode().length() == 5

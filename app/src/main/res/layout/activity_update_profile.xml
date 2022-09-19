@@ -26,6 +26,13 @@
                 android:layout_marginTop="40dp"
                 android:src="@drawable/editinguser_edituser_useedit_4520" />
 
+<Button
+    android:id="@+id/changePassword"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/changePassword"
+    />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_txi"

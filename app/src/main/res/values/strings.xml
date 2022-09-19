@@ -60,7 +60,15 @@
     <string name="no_reviews_hotel">there are no reviews for this hotel</string>
     <string name="home">home</string>
     <string name="delete_reviews">reviews deleted successfully</string>
-    <string name="changePassword">change password</string>
+    <string name="changePassword">update password</string>
+    <string name="old_username">old username</string>
+    <string name="new_username">new username</string>
+    <string name="confirm_username">confirm username</string>
+    <string name="username_wrong">wrong username</string>
+    <string name="changeUsername">update username</string>
+    <string name="username_dont_match">username do not match</string>
+    <string name="new_username_equal_old_username">username cannot be same as the previous one</string>
+    <string name="update_username_ok">username updated successfullly</string>
 
 
 </resources>

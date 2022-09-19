@@ -148,7 +148,6 @@ public class MyProfileActivity extends AppCompatActivity {
     private void setOnClickUpdateProfile() {
         this.update.setOnClickListener(view -> {
             Intent intent = new Intent(this, UpdateProfileActivity.class);
-            intent.putExtra("username", username.getText());
             intent.putExtra("name", name.getText());
             intent.putExtra("surname", surname.getText());
             intent.putExtra("email", email.getText());

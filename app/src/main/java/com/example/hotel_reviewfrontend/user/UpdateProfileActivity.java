@@ -31,13 +31,11 @@ import java.util.regex.Pattern;
 
 public class UpdateProfileActivity extends AppCompatActivity {
     private final static int SLEEP = 500;
-    private TextInputLayout username;
     private TextInputLayout name;
     private TextInputLayout surname;
     private TextInputLayout email;
     private TextInputLayout phone;
     private TextInputLayout address;
-    private String usernameStr;
     private String nameStr;
     private String surnameStr;
     private String emailStr;
@@ -45,12 +43,10 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private String addressStr;
     private Button save;
     private Button passwordBtn;
+    private Button usernameBtn;
     private LoadingDialog loadingDialog;
     private boolean requestDone;
     private boolean responseDone;
-    private boolean requestUsernameDone;
-    private boolean responseUsernameDone;
-    private String newUsername;
     private Utils utils;
     private Context context;
     private UserModel user;
@@ -61,26 +57,24 @@ public class UpdateProfileActivity extends AppCompatActivity {
         this.email = findViewById(R.id.email_txi);
         this.address = findViewById(R.id.address_txi);
         this.phone = findViewById(R.id.phone_txi);
-        this.username = findViewById(R.id.username_txi);
         this.save = findViewById(R.id.saveBtn);
         this.passwordBtn = findViewById(R.id.changePassword);
+        this.usernameBtn = findViewById(R.id.changeUsername);
 
         context = getApplicationContext();
 
         this.loadingDialog = new LoadingDialog(this);
         this.requestDone = false;
         this.responseDone = false;
-        this.requestUsernameDone = false;
-        this.responseUsernameDone = false;
 
         user = new UserModel();
         utils = new Utils();
 
         this.getFromIntent();
         this.setOnClickSave();
-        this.setOnCLickPassword();
+        this.setOnClickPassword();
+        this.setOnClickUsername();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +95,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            usernameStr = extras.getString("username");
             nameStr = extras.getString("name");
             surnameStr = extras.getString("surname");
             emailStr = extras.getString("email");
@@ -109,7 +102,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
             addressStr = extras.getString("address");
 
             //popolo i campi con i valori attuali dello user
-            this.username.getEditText().setText(usernameStr);
             this.name.getEditText().setText(nameStr);
             this.surname.getEditText().setText(surnameStr);
             this.email.getEditText().setText(emailStr);
@@ -156,7 +148,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         }
     }
 
-
+/*
     private void updateUsername() {
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
@@ -198,49 +190,36 @@ public class UpdateProfileActivity extends AppCompatActivity {
         }
     }
 
+ */
+
     protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
         responseDone = false;
         requestDone = false;
-        requestUsernameDone = false;
-        responseUsernameDone = false;
-
         user.setName(name.getEditText().getText().toString());
         user.setSurname(surname.getEditText().getText().toString());
         user.setEmail(email.getEditText().getText().toString());
         user.setPhone(phone.getEditText().getText().toString());
         user.setAddress(address.getEditText().getText().toString());
-        newUsername = username.getEditText().getText().toString();
 
         if (checkForm()) {
             new Thread(() -> {
                 utils.openLoadingDialog(loadingDialog, true);
 
-                while (!this.requestDone && !this.requestUsernameDone) {
+                while (!this.requestDone ) {
                     try {
                         Thread.sleep(SLEEP);
                     } catch (InterruptedException ignored) {
                     }
                     this.updateValues();
 
-                    if (usernameStr != newUsername) {
-                        this.updateUsername();
-                        requestUsernameDone = true;
-
-                    }
-
                     requestDone = true;
                 }
-                while (!responseDone && !responseUsernameDone) {
+                while (!responseDone) {
                     try {
                         Thread.sleep(SLEEP);
                     } catch (InterruptedException ignored) {
                     }
                 }
-                SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("username", newUsername);
-                editor.apply();
-                utils.openLoadingDialog(loadingDialog, false);
 
             }).start();
         }
@@ -249,7 +228,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private boolean checkForm() {
 
         if (!user.getName().isEmpty() && !user.getSurname().isEmpty() && !user.getEmail().isEmpty()
-                && !user.getAddress().isEmpty() && !user.getPhone().isEmpty() && !newUsername.isEmpty()) {
+                && !user.getAddress().isEmpty() && !user.getPhone().isEmpty() ) {
 
             if (this.checkEmail(user)) {
                 return true;
@@ -273,11 +252,24 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     }
 
-    private void setOnCLickPassword() {
+    private void setOnClickPassword() {
         this.passwordBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, UpdatePasswordActivity.class);
+            intent.putExtra("username", user.getUsername());
             startActivity(intent);
         });
     }
 
+    private void setOnClickUsername() {
+        this.usernameBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, UpdateUsernameActivity.class);
+            intent.putExtra("username", user.getUsername());
+            startActivity(intent);
+        });
+    }
+
+
+
 }
+
+

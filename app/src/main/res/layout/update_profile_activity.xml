@@ -30,7 +30,15 @@
                 android:id="@+id/changePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/changePassword" />
+
+            <Button
+                android:id="@+id/changeUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/changeUsername" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -110,25 +118,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/white"
-                    android:background="@color/quantum_purple700" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_txi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColorHint="@color/white"
-                android:hint="@string/username">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
-                    android:inputType="textFilter"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"
                     android:background="@color/quantum_purple700" />
 
             </com.google.android.material.textfield.TextInputLayout>

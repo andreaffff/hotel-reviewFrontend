@@ -23,16 +23,18 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
 
-public class UpdatePasswordActivity extends AppCompatActivity {
+import java.util.Locale;
+
+public class UpdateUsernameActivity extends AppCompatActivity {
     final int SLEEP = 500;
-    TextInputLayout oldPassword;
-    TextInputLayout newPassword;
-    TextInputLayout confirmPassword;
+    TextInputLayout oldusername;
+    TextInputLayout newUsername;
+    TextInputLayout confirmUsername;
     Button save;
     Utils utils;
-    String oldPasswordStr;
-    String newPasswordStr;
-    String confirmPasswordStr;
+    String oldusernameStr;
+    String newUsernameStr;
+    String confirmUsernameStr;
     Context context;
     LoadingDialog loadingDialog;
     Boolean responseDone = false;
@@ -41,18 +43,16 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_password_activity);
-        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
-        String passwordPreference = preferences.getString("password", null);
+        setContentView(R.layout.update_username_activity);
         this.initializeComponents();
 
     }
 
     private void initializeComponents() {
-        oldPassword = findViewById(R.id.oldPsw_txi);
-        newPassword = findViewById(R.id.newPsw_txi);
-        confirmPassword = findViewById(R.id.confirmNewPsw_txi);
-        save = findViewById(R.id.enter_Btn);
+        oldusername = findViewById(R.id.oldUsername_txi);
+        newUsername = findViewById(R.id.newUsername_txi);
+        confirmUsername = findViewById(R.id.confirmNewUsername_txi);
+        save = findViewById(R.id.enter_Username_Btn);
         context = getApplicationContext();
         utils = new Utils();
         responseDone = false;
@@ -74,22 +74,21 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         responseDone = false;
         requestDone = false;
 
-        oldPasswordStr = oldPassword.getEditText().getText().toString();
-        newPasswordStr = newPassword.getEditText().getText().toString();
-        confirmPasswordStr = confirmPassword.getEditText().getText().toString();
+        oldusernameStr = oldusername.getEditText().getText().toString().toLowerCase(Locale.ROOT);
+        newUsernameStr = newUsername.getEditText().getText().toString().toLowerCase(Locale.ROOT);
+        confirmUsernameStr = confirmUsername.getEditText().getText().toString().toLowerCase(Locale.ROOT);
 
 
         new Thread(() -> {
 
-            if (confirmPasswordStr.equals(newPasswordStr) && confirmPasswordStr.length() >= 7
-                    && !oldPasswordStr.equals(newPasswordStr)) {
+            if (confirmUsernameStr.equals(newUsernameStr) && !oldusernameStr.equals(newUsernameStr)) {
                 utils.openLoadingDialog(loadingDialog, true);
                 while (!this.requestDone) {
                     try {
                         Thread.sleep(SLEEP);
                     } catch (InterruptedException ignored) {
                     }
-                    this.updatePassword();
+                    this.updateUsername();
                     requestDone = true;
                 }
                 while (!responseDone) {
@@ -100,12 +99,10 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                 }
                 utils.openLoadingDialog(loadingDialog, false);
 
-            } else if (confirmPasswordStr.length() < 7) {
-                utils.showToast(this, getString(R.string.password_too_short));
-            } else if (!confirmPasswordStr.equals(newPasswordStr)) {
-                utils.showToast(this, getString(R.string.passwords_not_match));
-            } else if (oldPasswordStr.equals(newPasswordStr)) {
-                utils.showToast(this, getString(R.string.new_password_equal_old_password));
+            } else if (!confirmUsernameStr.equals(newUsernameStr)) {
+                utils.showToast(this, getString(R.string.username_dont_match));
+            } else if (oldusernameStr.equals(newUsernameStr)) {
+                utils.showToast(this, getString(R.string.new_username_equal_old_username));
             } else
                 utils.showToast(this, getString(R.string.something_went_wrong));
 
@@ -113,27 +110,27 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void updatePassword() {
+    private void updateUsername() {
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         String usernamePreference = preferences.getString("username", null);
         if (usernamePreference != null) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String url = getString(R.string.base_url) + "/user/updatePassword?username=" + usernamePreference;
+            String url = getString(R.string.base_url) + "/user/updateUsername?username=" + usernamePreference;
             JsonObjectRequest jsonReq = null;
             JSONObject jsonObject = new JSONObject();
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("password", newPasswordStr);
+            editor.putString("username", newUsernameStr);
             editor.apply();
 
 
             try {
-                jsonObject.put("oldValue", oldPasswordStr);
-                jsonObject.put("newValue", newPasswordStr);
+                jsonObject.put("oldValue", oldusernameStr);
+                jsonObject.put("newValue", newUsernameStr);
                 jsonReq = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject res) {
                         responseDone = true;
-                        utils.showToast(context, getString(R.string.update_password_ok));
+                        utils.showToast(context, getString(R.string.update_username_ok));
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -141,7 +138,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                         responseDone = true;
 
                         if (error.toString().equals("com.android.volley.AuthFailureError")) {
-                            utils.showToast(context, getString(R.string.password_wrong));
+                            utils.showToast(context, getString(R.string.username_wrong));
                         } else
                             utils.showToast(context, getString(R.string.something_went_wrong));
                     }

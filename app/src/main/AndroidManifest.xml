@@ -71,6 +71,12 @@
         </activity>
 
         <activity
+            android:name=".user.UpdateUsernameActivity"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity
             android:name=".review.HotelReviewActivity"
             android:exported="true"
             tools:ignore="Instantiatable">

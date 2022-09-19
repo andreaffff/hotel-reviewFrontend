@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         homeIntent.addCategory(Intent.CATEGORY_HOME);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);
+        finish();
     }
 
 }

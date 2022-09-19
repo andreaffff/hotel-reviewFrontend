@@ -42,8 +42,6 @@ public class UpdatePasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_password_activity);
-        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
-        String passwordPreference = preferences.getString("password", null);
         this.initializeComponents();
 
     }

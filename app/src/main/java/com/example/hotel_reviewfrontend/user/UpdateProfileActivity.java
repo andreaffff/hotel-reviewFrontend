@@ -148,50 +148,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
         }
     }
 
-/*
-    private void updateUsername() {
-        SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
-        String usernamePreference = preferences.getString("username", null);
-        if (usernamePreference != null) {
-            Log.d("username!=", "entra");
-
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String url = getString(R.string.base_url) + "/user/updateUsername?username=" + usernamePreference;
-            JsonObjectRequest jsonReq = null;
-            JSONObject jsonObject = new JSONObject();
-
-            try {
-                jsonObject.put("oldValue", usernameStr);
-                jsonObject.put("newValue", newUsername);
-
-                jsonReq = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject res) {
-                        responseDone = true;
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        utils.showToast(context, getString(R.string.something_went_wrong));
-                        responseDone = true;
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            requestQueue.add(jsonReq);
-        } else {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                context.deleteSharedPreferences("userData");
-            } else
-                context.getSharedPreferences("userData", Context.MODE_PRIVATE).edit().clear().apply();
-        }
-    }
-
- */
-
     protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
         responseDone = false;
         requestDone = false;

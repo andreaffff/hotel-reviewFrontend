@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/transparent"
             android:orientation="vertical">
 
 
@@ -23,22 +24,29 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
-                android:src="@drawable/icon1" />
+                android:src="@drawable/editinguser_edituser_useedit_4520" />
+
+            <Button
+                android:id="@+id/changePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/changePassword" />
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_txi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
                 android:textColorHint="@color/white"
+                android:layout_marginTop="40dp"
                 android:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/quantum_purple700"
-                    />
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:background="@color/quantum_purple700" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +61,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700"/>
+                    android:textColorHint="@color/white"
+                    android:background="@color/quantum_purple700" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,7 +77,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700"/>
+                    android:textColorHint="@color/white"
+                    android:background="@color/quantum_purple700" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,10 +93,10 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700"/>
+                    android:textColorHint="@color/white"
+                    android:background="@color/quantum_purple700" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phone_txi"
@@ -99,7 +109,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700"/>
+                    android:textColorHint="@color/white"
+                    android:background="@color/quantum_purple700" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,53 +127,20 @@
                     android:layout_height="wrap_content"
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                     android:inputType="textFilter"
-                    android:background="@color/quantum_purple700"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_txi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColorHint="@color/white"
-                android:hint="@string/password">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:inputType="textPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/quantum_purple700"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/confirmPassword_txi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColorHint="@color/white"
-                android:hint="@string/confirm_password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/quantum_purple700"/>
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:background="@color/quantum_purple700" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <Button
-                android:id="@+id/enter_Btn"
+                android:id="@+id/saveBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginTop="20dp"
-                android:background="@color/quantum_purple700"
-                android:text="@string/enter"
-                android:textColor="@color/white" />
+                android:text="@string/save" />
         </LinearLayout>
-
     </ScrollView>
 
 </RelativeLayout>

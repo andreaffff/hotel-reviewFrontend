@@ -24,7 +24,6 @@ import com.example.hotel_reviewfrontend.review.HomeActivity;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,9 +49,10 @@ public class MyProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_profile);
+        setContentView(R.layout.my_profile_activity);
         this.initializeComponents();
     }
+
     private void initializeComponents() {
 
         this.name = findViewById(R.id.name_txo);
@@ -77,6 +77,7 @@ public class MyProfileActivity extends AppCompatActivity {
         this.setOnClickDeleteUser();
         this.setOnClickHome();
     }
+
     protected void requestHandler() { //creazione thread per richiesta e gestione caricamento
         responseDone = false;
         requestDone = false;
@@ -171,19 +172,21 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void setOnClickHome(){
+    private void setOnClickHome() {
         this.home.setOnClickListener(view -> {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         });
     }
+
     private void setOnClickDeleteUser() {
         this.deleteUser.setOnClickListener(view -> {
             //TODO inserire alert dialog che chiede la conferma dell'eliminazione
             deleteUserHandler();
         });
     }
-    private void deleteUserHandler(){
+
+    private void deleteUserHandler() {
         responseDone = false;
         requestDone = false;
 //TODO inserire if in cui controllo che è stata accettata l'eliminazione nell'alert dialog
@@ -191,7 +194,7 @@ public class MyProfileActivity extends AppCompatActivity {
             utils.openLoadingDialog(loadingDialog, true);
 
             while (!this.requestDone) {
-                Log.d("requestDone","entra");
+                Log.d("requestDone", "entra");
                 try {
                     Thread.sleep(SLEEP);
                 } catch (InterruptedException ignored) {
@@ -199,7 +202,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 deleteUser();
                 requestDone = true;
             }
-            Log.d("requestDone","esce");
+            Log.d("requestDone", "esce");
             while (!responseDone) {
                 try {
                     Thread.sleep(SLEEP);
@@ -243,10 +246,6 @@ public class MyProfileActivity extends AppCompatActivity {
             requestQueue.add(jsonReq);
         }
     }
-
-
-
-
 
 
 }

@@ -19,7 +19,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.UserModel;
-import com.example.hotel_reviewfrontend.review.UpdateReviewActivity;
 import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
@@ -86,7 +85,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_profile);
+        setContentView(R.layout.update_profile_activity);
 
         this.initializeComponents();
     }
@@ -274,7 +273,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
     }
 
-    private void setOnCLickPassword(){
+    private void setOnCLickPassword() {
         this.passwordBtn.setOnClickListener(view -> {
             Intent intent = new Intent(this, UpdatePasswordActivity.class);
             startActivity(intent);

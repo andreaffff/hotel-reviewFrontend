@@ -14,15 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.model.ReviewModel;
-import com.example.hotel_reviewfrontend.review.HomeActivity;
 import com.example.hotel_reviewfrontend.utils.OnClickAction;
-
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder>  {
+public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.MyViewHolder> {
     Context context;
     ArrayList<ReviewModel> reviewModels;
     OnClickAction onClickAction;
@@ -37,22 +35,23 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @Override
     public HomeRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_row, parent, false);
+        View view = inflater.inflate(R.layout.recycler_row_fragment, parent, false);
         return new HomeRecyclerViewAdapter.MyViewHolder(view, context, onClickAction);
     }
+
     //TODO RISOLVERE HARDCODING
     @Override
     public void onBindViewHolder(@NonNull HomeRecyclerViewAdapter.MyViewHolder holder, int position) {
         try {
-            holder.userTw.setText(" "+"User:" +" "+ reviewModels.get(position).getUsername());
-            holder.titleTw.setText(" "+"Title:" + " " + reviewModels.get(position).getTitle());
-            holder.textTw.setText(" "+"Text:" + " " + reviewModels.get(position).getText());
-            holder.hotelTw.setText(" "+"Hotel:" + " " + reviewModels.get(position).getHotel().toLowerCase(Locale.ROOT));
-            holder.zipCodeTw.setText(" "+"Zip Code:" + " " + reviewModels.get(position).getZipCode());
-            holder.ratingBarI.setRating( reviewModels.get(position).getRating());
+            holder.userTw.setText(" " + "User:" + " " + reviewModels.get(position).getUsername());
+            holder.titleTw.setText(" " + "Title:" + " " + reviewModels.get(position).getTitle());
+            holder.textTw.setText(" " + "Text:" + " " + reviewModels.get(position).getText());
+            holder.hotelTw.setText(" " + "Hotel:" + " " + reviewModels.get(position).getHotel().toLowerCase(Locale.ROOT));
+            holder.zipCodeTw.setText(" " + "Zip Code:" + " " + reviewModels.get(position).getZipCode());
+            holder.ratingBarI.setRating(reviewModels.get(position).getRating());
             holder.id = reviewModels.get(position).getId();
             holder.hotel = reviewModels.get(position).getHotel();
-            holder.zipCode=reviewModels.get(position).getZipCode();
+            holder.zipCode = reviewModels.get(position).getZipCode();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +62,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         return reviewModels.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public int id;
         public String user;
         public String text;
@@ -91,20 +90,21 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             delete.setOnClickListener(this);
             update.setOnClickListener(this);
         }
+
         public int getId() {
             return id;
         }
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.deleteReviewBtn:
-                    Toast.makeText(context,"delete", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
                     onClickAction.onDelete(id);
                     break;
                 case R.id.updateReviewBtn:
-                    Toast.makeText(context,"update", Toast.LENGTH_SHORT ).show();
-                    onClickAction.onUpdate(id,  hotel,  zipCode);
+                    Toast.makeText(context, "update", Toast.LENGTH_SHORT).show();
+                    onClickAction.onUpdate(id, hotel, zipCode);
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + view.getId());

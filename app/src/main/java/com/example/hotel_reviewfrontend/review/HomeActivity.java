@@ -3,7 +3,6 @@ package com.example.hotel_reviewfrontend.review;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,11 +24,9 @@ import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.adapter.HomeRecyclerViewAdapter;
 import com.example.hotel_reviewfrontend.model.ReviewModel;
-import com.example.hotel_reviewfrontend.signInAndLogin.LoginActivity;
-import com.example.hotel_reviewfrontend.user.MyProfileActivity;
-import com.example.hotel_reviewfrontend.user.UpdateProfileActivity;
-import com.example.hotel_reviewfrontend.utils.OnClickAction;
 import com.example.hotel_reviewfrontend.user.AdminOnlyActivity;
+import com.example.hotel_reviewfrontend.user.MyProfileActivity;
+import com.example.hotel_reviewfrontend.utils.OnClickAction;
 import com.example.hotel_reviewfrontend.utils.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -66,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
         adminOnlyBtn = findViewById(R.id.adminOnly);
         recyclerView = findViewById(R.id.myReviewRecyclerView);
         profile = findViewById(R.id.profile);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         this.initializeComponents();
 
     }
@@ -88,6 +84,7 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
         setOnClickProfile();
         setOnClickAddReview();
     }
+
     private void setOnClickSearch() {
         this.searchBtn.setOnClickListener(view -> {
             getReviewsByHotel();
@@ -221,12 +218,12 @@ public class HomeActivity extends AppCompatActivity implements OnClickAction {
     }
 
     @Override
-    public void onUpdate(int id,    String hotel, String zipCode) {
+    public void onUpdate(int id, String hotel, String zipCode) {
         Intent intent = new Intent(this, UpdateReviewActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("hotel", hotel);
         intent.putExtra("zipCode", zipCode);
-                startActivity(intent);
+        startActivity(intent);
     }
 
 }

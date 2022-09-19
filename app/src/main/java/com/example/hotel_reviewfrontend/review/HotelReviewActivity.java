@@ -35,9 +35,9 @@ public class HotelReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hotel_review_page);
+        setContentView(R.layout.hotel_review_activity);
         recyclerView = findViewById(R.id.hotelRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         this.initializeComponents();
 
     }

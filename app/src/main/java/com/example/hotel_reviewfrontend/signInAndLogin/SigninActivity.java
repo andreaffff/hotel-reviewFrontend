@@ -55,7 +55,7 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_signin);
+        setContentView(R.layout.signin_activity);
         Log.d("On create", "Entra qui");
         SharedPreferences preferences = this.getSharedPreferences("userData", Context.MODE_PRIVATE);
         if (preferences != null) {

@@ -29,7 +29,7 @@ public class HotelRecyclerViewAdapter extends RecyclerView.Adapter<HotelRecycler
     public HotelRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.recycler_row_hotel, parent, false);
+        View view = inflater.inflate(R.layout.recycler_row_hotel_fragment, parent, false);
         return new HotelRecyclerViewAdapter.MyViewHolder(view);
     }
 

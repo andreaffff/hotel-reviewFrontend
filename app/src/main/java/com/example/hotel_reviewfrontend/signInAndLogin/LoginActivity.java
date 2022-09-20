@@ -15,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.hotel_reviewfrontend.LoadingDialog.LoadingDialog;
+import com.example.hotel_reviewfrontend.MainActivity;
 import com.example.hotel_reviewfrontend.R;
 import com.example.hotel_reviewfrontend.review.HomeActivity;
 import com.example.hotel_reviewfrontend.utils.Utils;
@@ -166,6 +167,14 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SigninActivity.class);
             startActivity(intent);
         });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
 
     }
 

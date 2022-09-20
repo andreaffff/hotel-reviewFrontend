@@ -141,6 +141,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            responseDone = true;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 context.deleteSharedPreferences("userData");
             } else
@@ -167,7 +168,6 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     } catch (InterruptedException ignored) {
                     }
                     this.updateValues();
-
                     requestDone = true;
                 }
                 while (!responseDone) {
@@ -176,7 +176,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     } catch (InterruptedException ignored) {
                     }
                 }
-
+                utils.openLoadingDialog(loadingDialog, false);
+                Intent intent = new Intent(this, MyProfileActivity.class);
+                startActivity(intent);
             }).start();
         }
     }

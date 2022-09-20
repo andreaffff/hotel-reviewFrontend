@@ -223,7 +223,7 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_width="128dp"
                     android:layout_height="40dp"
                     android:text="@string/username"
                     android:textAppearance="?attr/textAppearanceHeadline6"
